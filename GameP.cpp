@@ -7,8 +7,8 @@ using namespace std;
 
 REFERENCE
 --------------
-? change text console colour ::  https://youtu.be/MvX4tVETjHk
-? press Left,Right button without ENTER key ::  https://www.geeksforgeeks.org/getch-function-in-c-with-examples/
+? change text console colour                        ::  https://youtu.be/MvX4tVETjHk
+? press LEFT,RIGHT arrow button without ENTER key   ::  https://www.geeksforgeeks.org/getch-function-in-c-with-examples/
 
 */
 void GameP(){
