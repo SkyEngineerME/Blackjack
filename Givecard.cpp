@@ -10,7 +10,7 @@ string CardId[52] = {"A","2","3","4","5","6","7","8","9","10","J","Q","K",
 
 void shuffle(string cardID[], int n)
 {
-    srand(time(0));
+    
     for (int i=0; i<52 ;i++){
         int r = i + (rand() % (52 -i));
         swap(cardID[i], cardID[r]);
@@ -24,6 +24,7 @@ string Givecard(string CardID[],int &cardn)
 
 int main()
 {
+    srand(time(0));
     int cardn = 0;
     shuffle(CardId, 52);
     cout << Givecard(CardId,cardn) << endl;
