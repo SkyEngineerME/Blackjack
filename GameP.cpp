@@ -3,7 +3,14 @@
 #include <windows.h>
 
 using namespace std;
+/*
 
+REFERENCE
+--------------
+? change text console colour ::  https://youtu.be/MvX4tVETjHk
+? press Left,Right button without ENTER key ::  https://www.geeksforgeeks.org/getch-function-in-c-with-examples/
+
+*/
 void GameP(){
     system("cls");
 
