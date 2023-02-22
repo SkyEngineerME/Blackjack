@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <vector>
 using namespace std;
 
 string CardId[52] = {"A","2","3","4","5","6","7","8","9","10","J","Q","K",
@@ -28,10 +29,10 @@ int Givecard(string CardID[],int &cardn)
     return cardn-1;
 }
 
-bool Propa(int handbot[]){ //true = drawnewcard
+bool Propa(vector<int> handbot){ //true = drawnewcard
     int ace = 0;
     int sum = 0;
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < handbot.size(); i++)
     {
          if (Cardpoint[handbot[i]] == 1)
          {
@@ -48,6 +49,7 @@ bool Propa(int handbot[]){ //true = drawnewcard
         }    
     }
     int ran = rand()%100 + 1;
+    cout <<ace <<' '<<sum<<' ';
     if ((21-sum)>= 10)
     {
         return true;
@@ -64,13 +66,20 @@ int main()
     srand(time(0));
     int cardn = 0;
     shuffle(CardId, 52);
-    int playerhand[10] = {Givecard(CardId,cardn),Givecard(CardId,cardn)};
-    int bothand[10] = {Givecard(CardId,cardn),Givecard(CardId,cardn)};
-    cout <<'\n' <<CardId[playerhand[0]] <<' '<<playerhand[0] <<endl;
+    vector<int> playerhand;
+    vector<int> bothand;
+    for (int i = 0; i < 2; i++)
+    {
+        playerhand.push_back(Givecard(CardId,cardn));
+        bothand.push_back(Givecard(CardId,cardn));
+    }
+    cout <<CardId[playerhand[0]] <<' '<<playerhand[0] <<endl;
     cout << CardId[playerhand[1]] <<' '<<playerhand[1] <<endl;
+    cout <<CardId[bothand[0]] <<' '<<bothand[0] <<endl;
+    cout << CardId[bothand[1]] <<' '<<bothand[1] <<endl;
+    cout << Propa(bothand);
     return 0;
 
 }
 
 
-// Reference:https://www.geeksforgeeks.org/shuffle-a-deck-of-cards-3/
