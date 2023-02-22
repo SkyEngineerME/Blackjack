@@ -1,6 +1,10 @@
 #include <iostream>
 #include <windows.h>
 using namespace std;
+
+/* color ref. https://www.youtube.com/watch?v=MvX4tVETjHk&t=19s&ab_channel=CodeLeader */
+/* this function doesn't work in some cases (bug when put alphabat in it, cannot put 2 data in one time)*/
+
 void BetP(int &moneyp){
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(h,14);
