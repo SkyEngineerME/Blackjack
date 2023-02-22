@@ -75,7 +75,7 @@ int main()
     }
     cout <<CardId[playerhand[0]] <<' '<<playerhand[0] <<endl;
     cout << CardId[playerhand[1]] <<' '<<playerhand[1] <<endl;
-    cout <<CardId[bothand[0]] <<' '<<bothand[0] <<endl;
+    cout <<CardId[bothand[0]] <<' '<<bothand[0] <<endl;//78-80ทดสอบดูค่าไพ่ที่ได้
     cout << CardId[bothand[1]] <<' '<<bothand[1] <<endl;
     cout << Propa(bothand);
     return 0;
