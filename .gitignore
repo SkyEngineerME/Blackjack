@@ -1,3 +1,4 @@
 *.exe
 test/
 tempCodeRunnerFile.cpp
+.vscode/
