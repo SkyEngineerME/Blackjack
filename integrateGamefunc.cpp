@@ -64,12 +64,18 @@ int main(){
         GameP_ShowCard(playerhand);
         GameP(playerhand,PlayerHit,cardn,ScoreP);
         CheckScore(ScoreP,bypassend);
-        if (!bypassend) ShowScore(ScoreP,false);
+        if (!bypassend) {
+            GameP_ShowCard(playerhand); 
+            ShowScore(ScoreP,false);
+        }
     }
     while(BotHit && bypassend){
         GameB(bothand,BotHit,cardn,ScoreB);
         CheckScore(ScoreB,bypassend);
-        if (!bypassend) ShowScore(ScoreB,true);
+        if (!bypassend) {
+            GameB_ShowCard(bothand,false); 
+            ShowScore(ScoreB,true);
+        }
     }
 
     cout << '\n';
