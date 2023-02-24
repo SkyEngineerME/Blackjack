@@ -96,7 +96,7 @@ void CheckScore(int score, bool &bypassend){
 }
 
 void GameP_ShowCard(vector<int> playerhand){
-    cout << "Your Card is => ";
+    cout << "\nYour Card is => ";
     for (unsigned int i = 0; i < playerhand.size(); i++){
         cout << CardId[playerhand[i]] << ' ';
     }
@@ -104,7 +104,7 @@ void GameP_ShowCard(vector<int> playerhand){
 }
 
 void GameB_ShowCard(vector<int> bothand,bool firstturn){
-    cout << "Bot's card is => ";
+    cout << "\nBot's card is => ";
     for (unsigned int i = 0; i < bothand.size(); i++){
         if(firstturn){
             if (bothand.size()-1 == i) cout << CardId[bothand[i]] << ' ';
