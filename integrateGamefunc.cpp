@@ -61,6 +61,7 @@ int main(){
     }
 
     while(PlayerHit && bypassend){
+        cout << "\n--------   Your turn   --------\n";
         GameP_ShowCard(playerhand);
         GameP(playerhand,PlayerHit,cardn,ScoreP);
         CheckScore(ScoreP,bypassend);
@@ -70,6 +71,7 @@ int main(){
         }
     }
     while(BotHit && bypassend){
+        cout << "\n--------   Bot turn   --------\n";
         GameB(bothand,BotHit,cardn,ScoreB);
         CheckScore(ScoreB,bypassend);
         if (!bypassend) {
