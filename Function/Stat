@@ -1,0 +1,47 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int n = 0;
+void Stat(int point,string name,bool condition ){
+    int a ,n=0;
+    string filedata ,conditionstring ;
+    
+    if(condition == true) conditionstring = "W"; 
+    else conditionstring = "L";
+
+    ifstream infile("StatBlackjack.txt");
+    ofstream oufile("StatBlackjack.txt",ios::app);
+
+    while (getline(infile,filedata)){
+        a = atoi(filedata.c_str());
+    }
+    if(a == 6422260) a = -1;
+    n = a+1;
+    oufile << n <<" | "<< name << " | "<< point << " | "<< conditionstring << endl;
+
+    oufile.close();
+    infile.close();
+
+}
+void Stat(){
+
+    string filedata;
+    ifstream infile("StatBlackjack.txt");
+    ofstream oufile("StatBlackjack.txt",ios::app);
+    cout << "LeaderBoard" << endl;
+    cout << "N  |"<< "  Name  |" << "  Score  |" << "  Condition  |"<< endl;
+    cout << "-------------------------------------"<<endl;
+    while (getline(infile,filedata)){
+        cout << filedata << endl;
+    }
+    oufile.close();
+    infile.close();
+
+}
+int main()
+{
+    Stat(60,"Skh",0);
+    Stat();
+    return 0;
+}
