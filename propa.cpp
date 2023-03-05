@@ -38,13 +38,13 @@ class bot
         bot(string [], int &);
         void Propa();
         int show(int);
-        bool botact;
+        bool botact();
         ~bot();
     };
 
 bot::bot(string Card[],int &ncard)
 {
-    botact = false;
+    botdraw = false;
     for (int i = 0; i < 2; i++)
     {
         bothand.push_back(Givecard(Card,ncard));
@@ -77,16 +77,19 @@ void bot::Propa(){ //true = drawnewcard
         }    
     }
     int ran = rand()%100 + 1;
-    cout <<ace <<' '<<sum<<' ';
     if ((21-sum)>= 10)
     {
-        botact = true;
+        botdraw = true;
     }else if (((21-sum)/10.0*100)>=(ran))
     {
-        botact = true;
+        botdraw = true;
     }else{
-        botact = false;
+        botdraw = false;
     }
+}
+
+bool bot::botact(){
+    return botdraw;
 }
 
 int bot::show(int numcard){
@@ -108,7 +111,8 @@ int main()
     cout <<CardId[playerhand[0]] <<' '<<playerhand[0] <<endl;
     cout << CardId[playerhand[1]] <<' '<<playerhand[1] <<endl;
     cout <<CardId[bot1.show(0)]<<' '<<CardId[bot1.show(1)];
-    
+    bot1.Propa();
+    cout <<' '<<bot1.botact();
     return 0;
 
 }
