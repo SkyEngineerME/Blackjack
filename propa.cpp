@@ -14,6 +14,12 @@ int Cardpoint[52] = {1,2,3,4,5,6,7,8,9,10,10,10,10,
                      1,2,3,4,5,6,7,8,9,10,10,10,10,
                      1,2,3,4,5,6,7,8,9,10,10,10,10};
 
+int Givecard(string CardID[],int &cardn)
+{
+    ++cardn;
+    return cardn-1;
+}
+
 void shuffle(string cardID[], int n)
 {
     for (int i=0; i<52 ;i++){
@@ -23,22 +29,44 @@ void shuffle(string cardID[], int n)
     }
 }
 
-int Givecard(string CardID[],int &cardn)
+class bot
+    {
+    private:
+        vector<int> bothand;
+        bool botdraw;
+    public:
+        bot(string [], int &);
+        void Propa();
+        int show(int);
+        bool botact;
+        ~bot();
+    };
+
+bot::bot(string Card[],int &ncard)
 {
-    ++cardn;
-    return cardn-1;
+    botact = false;
+    for (int i = 0; i < 2; i++)
+    {
+        bothand.push_back(Givecard(Card,ncard));
+    }
+    
 }
 
-bool Propa(vector<int> handbot){ //true = drawnewcard
+bot::~bot()
+{
+
+}
+
+void bot::Propa(){ //true = drawnewcard
     int ace = 0;
     int sum = 0;
-    for (int i = 0; i < handbot.size(); i++)
+    for (int i = 0; i < bothand.size(); i++)
     {
-         if (Cardpoint[handbot[i]] == 1)
+         if (Cardpoint[bothand[i]] == 1)
          {
              ace++;
          }
-    sum += Cardpoint[handbot[i]];
+    sum += Cardpoint[bothand[i]];
     }
 
     for (int i1 = 0; i1 < ace; i1++)
@@ -52,13 +80,17 @@ bool Propa(vector<int> handbot){ //true = drawnewcard
     cout <<ace <<' '<<sum<<' ';
     if ((21-sum)>= 10)
     {
-        return true;
+        botact = true;
     }else if (((21-sum)/10.0*100)>=(ran))
     {
-        return true;
+        botact = true;
     }else{
-        return false;
+        botact = false;
     }
+}
+
+int bot::show(int numcard){
+    return bothand[numcard];
 }
 
 int main()
@@ -71,13 +103,12 @@ int main()
     for (int i = 0; i < 2; i++)
     {
         playerhand.push_back(Givecard(CardId,cardn));
-        bothand.push_back(Givecard(CardId,cardn));
     }
+    bot bot1(CardId,cardn);
     cout <<CardId[playerhand[0]] <<' '<<playerhand[0] <<endl;
     cout << CardId[playerhand[1]] <<' '<<playerhand[1] <<endl;
-    cout <<CardId[bothand[0]] <<' '<<bothand[0] <<endl;//78-80ทดสอบดูค่าไพ่ที่ได้
-    cout << CardId[bothand[1]] <<' '<<bothand[1] <<endl;
-    cout << Propa(bothand);
+    cout <<CardId[bot1.show(0)]<<' '<<CardId[bot1.show(1)];
+    
     return 0;
 
 }
