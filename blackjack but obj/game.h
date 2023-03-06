@@ -5,6 +5,7 @@
 #include <cctype>
 #include "player.h"
 #include "bot.h"
+#include "Dealer.h"
 using namespace std;
 
 class Game{
@@ -21,7 +22,7 @@ class Game{
         vector<string> name;
         vector<int> indexplayersuvival;
         vector<int> indexbotsuvival;
-        int player,bot;
+        int player,bot,round;
         int cardn = 0;
         int check;
         int GiveCard();
@@ -29,7 +30,7 @@ class Game{
         bool tryagain = true;
         bool checktwointerrupt = false;
         bool WhoSurvivalMoreover2(Player*, Bot*);
-        void Start(int,int);
+        void Start(int,int,int);
         void AddNamePlayer(string);
         void ShuffleCard();
         void PlayerShowCard(Player&);
@@ -39,19 +40,19 @@ class Game{
         void Winner(Player*, Bot*);
 };
 
-void Game::Start(int numplayer,int numbot){
+void Game::Start(int numplayer,int numbot,int round){
 
     Player *people = new Player[numplayer];
     Bot *ai = new Bot[numbot];
-
+    Dealer *DB = new Dealer;
     player = numplayer;
     bot = numbot;
-
+     
     /////////////////////////////////////// กำหนดชื่อแต่ละคน
     cout << "::: Type your name :::\n";
     for (int i=0; i<numplayer; i++){
         string name;
-        cout << "[" << i+1 << "] ";
+        cout << "[" << 1 << "] ";
         getline(cin,name);
         AddNamePlayer(name);
     }
@@ -160,6 +161,7 @@ void Game::Start(int numplayer,int numbot){
     
     delete [] people;
     delete [] ai;
+    delete DB;
 }
 
 void Game::Winner(Player *people, Bot *ai){
