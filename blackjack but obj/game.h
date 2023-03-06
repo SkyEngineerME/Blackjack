@@ -11,13 +11,13 @@ using namespace std;
 class Game{
     public:
         std::string CardId[52] = {"A","2","3","4","5","6","7","8","9","10","J","Q","K",
-                                  "A","2","3","4","5","6","7","8","9","10","J","Q","K",
-                                  "A","2","3","4","5","6","7","8","9","10","J","Q","K",
-                                  "A","2","3","4","5","6","7","8","9","10","J","Q","K"};
+                                "A","2","3","4","5","6","7","8","9","10","J","Q","K",
+                                "A","2","3","4","5","6","7","8","9","10","J","Q","K",
+                                "A","2","3","4","5","6","7","8","9","10","J","Q","K"};
         int Cardpoint[52] = {1,2,3,4,5,6,7,8,9,10,10,10,10,
-                             1,2,3,4,5,6,7,8,9,10,10,10,10,
-                             1,2,3,4,5,6,7,8,9,10,10,10,10,
-                             1,2,3,4,5,6,7,8,9,10,10,10,10};
+                            1,2,3,4,5,6,7,8,9,10,10,10,10,
+                            1,2,3,4,5,6,7,8,9,10,10,10,10,
+                            1,2,3,4,5,6,7,8,9,10,10,10,10};
 
         vector<string> name;
         vector<int> indexplayersuvival;
@@ -38,19 +38,17 @@ class Game{
         void BotShowCard(Bot&);
         void BotShowScore(Bot&);
         void Winner(Player*, Bot*);
-        void DealerShowCard(Dealer&);
-        void DealerShowScore(Dealer&);
 };
 
 void Game::Start(int numplayer,int numbot,int round){
 
+    int r = 0;
     Player *people = new Player[numplayer];
     Bot *ai = new Bot[numbot];
-    Dealer *DB = new Dealer[1];
+    Dealer *DB = new Dealer;
     player = numplayer;
     bot = numbot;
-     
-    /////////////////////////////////////// กำหนดชื่อแต่ละคน
+    
     cout << "::: Type your name :::\n";
     for (int i=0; i<numplayer; i++){
         string name;
@@ -66,14 +64,24 @@ void Game::Start(int numplayer,int numbot,int round){
         ai[i].AssignNumberbot(i+1);
     }
 
+
+    
+    cout << "::: How many round you want to play between [1-50] :::\n";
+    cout <<"Round: ";
+    cin >> round;
+        while(round < 1 || round > 50){
+        cout << "!!! Please choose between [1-50] !!!\n";
+        cout <<"Round: ";
+        cin >> round;
+        }
+
+    
     while(tryagain){
         system("cls");
         ShuffleCard();
-        //////////////////////////////////////// แจกไพ่ก่อนเริ่มเกม
+        cout << "\n--------Turn "<< r+1 << "--------";
+       
 
-        for (int i=0; i<1; i++){
-            for(int j=0; j<2; j++) DB[i].ReceiveCard(GiveCard());
-        }
         for (int i=0; i<numplayer; i++){
             for(int j=0; j<2; j++) people[i].ReceiveCard(GiveCard());
         }
@@ -81,18 +89,11 @@ void Game::Start(int numplayer,int numbot,int round){
             for(int j=0; j<2; j++) ai[i].ReceiveCard(GiveCard());
         }
 
-        ///////////////////////////////////////// GAMEPLAY
 
         while(WhoSurvivalMoreover2(people,ai)){
 
             //--------------------------------- โชว์ไพ่
             cout << "\n********* CARD & SCORE **********\n";
-            for (int i=0; i<1; i++){
-                DB[i].SumScore(Cardpoint);
-                DealerShowCard(DB[i]);
-                DealerShowScore(DB[i]);
-            }
-
             for (int i=0; i<numplayer; i++){
                 people[i].SumScore(Cardpoint);
                 PlayerShowCard(people[i]);
@@ -118,6 +119,7 @@ void Game::Start(int numplayer,int numbot,int round){
                     blackjack_flag = true;
                     break;
                 }
+    
             }
             if(numplayer==1 && numbot==1 && !people[0].survival) continue; //[Bug fix (temporary)] เมื่อเล่นคนเดียวกับบอท1ตัวแล้วแพ้ 
             if(blackjack_flag) break;
@@ -136,46 +138,50 @@ void Game::Start(int numplayer,int numbot,int round){
                 }
             }
             if(blackjack_flag) break;
+            
         }
 
-        ///////////////////////////////////////////
 
         Winner(people,ai);
 
-        ///////////////////////////////////////////
-
+        r++;
         while(true){
-            cout << "\nTry Again? [y/n]: ";
-            string ck;
-            getline(cin,ck);
-            if(toupper(ck[0]) == 'Y'){
+
+            if(r < round){
                 tryagain = true;
                 cardn = 0;
                 for (int i=0; i<numplayer; i++) people[i].SetDefault();
                 for (int i=0; i<numbot; i++) ai[i].SetDefault();
-                DB[0].SetDefault();
                 checktwointerrupt = false;
                 blackjack_flag = false;
                 indexplayersuvival.clear();
                 indexbotsuvival.clear();
                 break;
-            }else if(toupper(ck[0]) == 'N'){
+            }else if(r >= round){
                 tryagain = false;
                 break;
             }else{
                 cout << "Invalid Command !! Please type 'y' or 'n' only.";
-                continue;
+                break;
             }
-
         }
-
+        string ck;
+        getline(cin,ck);
+    while(true){
+        if(toupper(ck[0]) == 'Y'){
+            break;
+        }
+        cout << "Pressed [Y] to continue ";
+        getline(cin,ck);
     }
-    
+    }
+
     delete [] people;
     delete [] ai;
-    delete [] DB;
-}
+    delete DB;
 
+
+}
 void Game::Winner(Player *people, Bot *ai){
     //check who blackjack
     int count = 0;
@@ -292,16 +298,10 @@ void Game::BotShowCard(Bot &ai){
 }
 
 void Game::BotShowScore(Bot &ai){
-    ai.ShowScore();
-}
-
-void Game::DealerShowScore(Dealer &dealer){
-    if(dealer.firstturn) dealer.ShowScore(Cardpoint);
-    else dealer.ShowScore();
-}
-
-void Game::DealerShowCard(Dealer &dealer){
-    dealer.ShowCard(CardId);
+    if(ai.survival){
+        if(ai.firstturn) ai.ShowScore(Cardpoint);
+        else ai.ShowScore();
+    }
 }
 
 bool Game::WhoSurvivalMoreover2(Player *people, Bot *ai){ // func นี้เอาไว้เช็คว่าเหลือผู้เล่นกับบอทกี่คนแล้ว จนกว่าจะเหลือ2 (มีผลใน loop gameplay)
