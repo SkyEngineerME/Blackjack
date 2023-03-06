@@ -1,47 +1,95 @@
 #include <iostream>
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include <windows.h>
+
 using namespace std;
 
-/* color ref. https://www.youtube.com/watch?v=MvX4tVETjHk&t=19s&ab_channel=CodeLeader */
-/* this function doesn't work in some cases (bug when put alphabat in it, cannot put 2 data in one time)*/
+void BetB(int[],int[],int);
+void BetP(int&,double&);
+void Checkmoney(int&,double&,bool,bool&);
 
-void BetP(int &moneyp){
+int main(){
+    int moneyP =1000;
+    bool sw = false;
+    bool survive = true;
+    double betp;
+    BetB()
+    while(survive == true){
+    BetP(moneyP,betp);
+    sw = rand()%2;
+    Checkmoney(moneyP,betp,sw,survive);
+    }
+return 0;
+
+}
+
+void Checkmoney(int &moneyPlayer,double &Betplayer,bool condition,bool &survive){
+
+    if(condition == 0){
+        cout << "Got" << endl;
+        moneyPlayer += Betplayer*2;
+    }else{
+        cout << "Lose" << endl;
+        //moneyPlayer += Betplayer;
+        //moneyPlayer -= Betplayer;
+    }
+    if(moneyPlayer == 0){
+        cout << "Lose Game bye" << endl;
+        survive = false;
+    }
+
+}
+
+void BetB(int moneyb[], int betb[], int Nbot = 1){
+
+    HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+    srand(time(0));
+    SetConsoleTextAttribute(h,13);
+    cout << "------------------------------------\n";
+    for(int i = 0; i < Nbot; i++){
+        betb[i] = (moneyb[i]/10)*(rand()%9 + 1);
+        moneyb[i] = moneyb[i] - betb[i];
+        SetConsoleTextAttribute(h,13);
+        cout << "Bot No." << i+1 << " bets ";
+        SetConsoleTextAttribute(h,3);
+        cout << betb[i] << "$ ";
+        SetConsoleTextAttribute(h,13);
+        cout << "(left ";
+        SetConsoleTextAttribute(h,4);
+        cout << moneyb[i] <<"$";
+        SetConsoleTextAttribute(h,13);
+        cout << ")\n";
+
+    }
+    cout << "------------------------------------\n";
+    SetConsoleTextAttribute(h,7);
+}
+
+
+void BetP(int &moneyp,double &betp){
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(h,14);
     cout << "----888-------------------------888----\n";
     cout << "$$$ Put Your Money To Bet Your Fate $$$\n";
-    cout << "----888-------------------------888----\n";
+    cout << "----888-------------------------888----\n\n";
 
     while(true){
+    SetConsoleTextAttribute(h,14);
     cout << "Put your money (You have left ";
     SetConsoleTextAttribute(h,5);
     cout << moneyp << "$";
     SetConsoleTextAttribute(h,14);
     cout << ") : ";
 
- double betp;
-    cin >> betp;
-    if(betp <= 0) {
-        SetConsoleTextAttribute(h,4);
-        cout << "-----------------------------------------------------------------------\n";
-        cout << "$$$ Invalid input Man! Give me your money! Try again and quickly!!! $$$\n";
-        cout << "-----------------------------------------------------------------------\n";
-    }
-    else if(betp > moneyp){
-        SetConsoleTextAttribute(h,4);
-        cout << "--------------------------------------------------------------------------------\n";
-        cout << "$$$ Are you serious? You put money more than you have! Try again the poor!!! $$$\n";
-        cout << "--------------------------------------------------------------------------------\n";
-    }
-    else if(betp - (int) betp != 0) {
-        SetConsoleTextAttribute(h,4);
-        cout << "---------------------------------------------------------------------------------\n";
-        cout << "$$$ I don't want some kind of pocket change...Try again with integer numbers. $$$\n";
-        cout << "---------------------------------------------------------------------------------\n";
-    }
-    else{
+    string text;
+    getline(cin,text);
+    betp = atof(text.c_str());
+    if(betp > 0 && betp <= moneyp && betp - (int) betp == 0) {
         moneyp = moneyp-betp;
         SetConsoleTextAttribute(h,10);
+        cout << "\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n";
         cout << "You bet ";
         SetConsoleTextAttribute(h,3);
         cout << betp << "$ ";
@@ -50,14 +98,29 @@ void BetP(int &moneyp){
         SetConsoleTextAttribute(h,4);
         cout << moneyp << "$";
         SetConsoleTextAttribute(h,10);
-        cout << ")\n";
+        cout << ")\n\n";
+        cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n";
+        SetConsoleTextAttribute(h,7);
         break;
     }
+    else if(betp > moneyp){
+        SetConsoleTextAttribute(h,4);
+        cout << "\n--------------------------------------------------------------------------------\n";
+        cout << "$$$ Are you serious? You put money more than you have! Try again the poor!!! $$$\n";
+        cout << "--------------------------------------------------------------------------------\n\n";
     }
-}
-
-int main(){
-    int money = 100;
-    BetP(money);
-    return 0;
+    else if(betp - (int) betp != 0) {
+        SetConsoleTextAttribute(h,4);
+        cout << "\n---------------------------------------------------------------------------------\n";
+        cout << "$$$ I don't want some kind of pocket change...Try again with integer numbers. $$$\n";
+        cout << "---------------------------------------------------------------------------------\n\n";
+    }
+    else{
+        SetConsoleTextAttribute(h,4);
+        cout << "\n-----------------------------------------------------------------------\n";
+        cout << "$$$ Invalid input Man! Give me your money! Try again and quickly!!! $$$\n";
+        cout << "-----------------------------------------------------------------------\n\n";
+        cin.clear(); /*use to solve alphabet wrong input*/
+    }
+    }
 }
