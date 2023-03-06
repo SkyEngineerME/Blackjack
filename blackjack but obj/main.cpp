@@ -51,11 +51,12 @@ int main(){
         cout <<"Round: ";
         cin >> round;
         while(round < 1 || round > 50){
-        cout << "!!! Please choose between [1-50] !!!\n";
-        cout <<"Round: ";
-        cin >> round;
+            cout << "!!! Please choose between [1-50] !!!\n";
+            cout <<"Round: ";
+            cin >> round;
         }
 
+        cin.ignore();
         obj.Start(1,numbot,round);
         selectplay = menu();
     }
