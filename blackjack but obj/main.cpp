@@ -10,14 +10,16 @@ int main(){
         srand(time(0));
         Game obj;
         string input;
-        int numplayer,numbot;
+        int numbot;//numplayer
+        int round;
         bool flagfour = false;
         system("cls");
         cout << "----------------  Game init  ----------------\n";
-        while (true)
+       /* while (true)
         {
             cout << "Number of Player : ";
             getline(cin,input);
+
             if(input.size() > 1 || isdigit(input[0]) == false){
                 cout << "Invalid Input !! Please type number [1-4]\n"; 
             }else{
@@ -29,8 +31,8 @@ int main(){
                 else if(numplayer < 1 || numplayer > 4) cout << "Invalid Input !! Please type number [1-4]\n";
                 else break;
             }
-        }
-        if (!flagfour) cout << "\nYou can choose up to " << (4 - numplayer) << " more bots only.\n";
+        }*/
+        cout << "Choose bot between [1-3]" << " Unit.\n";
         while (!flagfour)
         {
             cout << "Number of Bot : ";
@@ -38,15 +40,23 @@ int main(){
             getline(cin,input);
             if(input.size() > 1 || isdigit(input[0]) == false){
                 cout << input.size() << ' ' << isdigit(input[0]);
-                cout << "Invalid Input !! Please type number [0-" << (4 - numplayer) << "]\n"; 
+                cout << "Invalid Input !! Please type number [1-" << (4 - 1) << "]\n"; 
             }else{
                 numbot = stoi(input);
-                if(numbot < 0 || numbot > (4-numplayer)) cout << "Invalid Input !! Please type number [0-" << (4 - numplayer) << "]\n";
+                if(numbot < 1 || numbot > (4-1)) cout << "Invalid Input !! Please type number [1-" << (4 - 1) << "]\n";
                 else break;
             }
         }
+        cout << "::: How many round you want to play between [1-50] :::\n";
+        cout <<"Round: ";
+        cin >> round;
+        while(round < 1 || round > 50){
+        cout << "!!! Please choose between [1-50] !!!\n";
+        cout <<"Round: ";
+        cin >> round;
+        }
 
-        obj.Start(numplayer,numbot);
+        obj.Start(1,numbot,round);
         selectplay = menu();
     }
 
