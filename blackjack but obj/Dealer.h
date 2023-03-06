@@ -6,7 +6,6 @@ using namespace std;
 
 class Dealer{
     private:
-        int number;
         vector<int> onhand;
     public:
         int score; 
@@ -43,25 +42,21 @@ void Dealer::SetDefault(){
 }
 
 string Dealer::ShowName(){
-    return "Bot" + to_string(number);
-}
-
-void Dealer::AssignNumberbot(int num){
-    number = num;
+    return "Dealer";
 }
 
 void Dealer::ShowScore(){
-    cout << "Dealer" << number << "'s Score is " << score << "\n\n";
+    cout << "Dealer's Score is " << score << "\n\n";
     if(score == 21) blackjack = true;
 }
 
 void Dealer::ShowScore(int Cardpoint[]){ // Overload Func Firstturn
-    cout << "Dealer" << number << "'s Score is " << score - Cardpoint[onhand[0]] << '\n';
+    cout << "Dealer's Score is " << score - Cardpoint[onhand[0]] << '\n';
     firstturn = false;
 }
 
 void Dealer::ShowCard(string CardId[]){
-    cout << "\nDealer" << number << "'s Card is => ";
+    cout << "\nDealer's Card is => ";
     for (unsigned int i = 0; i < onhand.size(); i++){
         if(firstturn){
             if (onhand.size()-1 == i) cout << CardId[onhand[i]] << ' ';
@@ -109,7 +104,7 @@ void Dealer::DealerThinking(){
 
 bool Dealer::CheckScoreOver21(){
     if(score>21){
-        cout << "\n!!!!!  Delaer" << number << " bust  !!!!!\n";
+        cout << "\n!!!!!  Dealer's lost  !!!!!\n";
         survival = false;
         return true;
     }else if(score == 21){
@@ -122,7 +117,7 @@ bool Dealer::CheckScoreOver21(){
 
 void Dealer::GamePlay(string CardId[], int Cardpoint[], int &cardn){
     if(survival){
-        cout << "\n--------   Dealer" << number << "'s turn   --------";
+        cout << "\n--------   Dealer's turn   --------";
         bool firstturn_bot = true;
         if(firstturn_bot){
             ShowCard(CardId);

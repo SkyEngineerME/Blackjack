@@ -38,13 +38,15 @@ class Game{
         void BotShowCard(Bot&);
         void BotShowScore(Bot&);
         void Winner(Player*, Bot*);
+        void DealerShowCard(Dealer&);
+        void DealerShowScore(Dealer&);
 };
 
 void Game::Start(int numplayer,int numbot,int round){
 
     Player *people = new Player[numplayer];
     Bot *ai = new Bot[numbot];
-    Dealer *DB = new Dealer;
+    Dealer *DB = new Dealer[1];
     player = numplayer;
     bot = numbot;
      
@@ -69,6 +71,9 @@ void Game::Start(int numplayer,int numbot,int round){
         ShuffleCard();
         //////////////////////////////////////// แจกไพ่ก่อนเริ่มเกม
 
+        for (int i=0; i<1; i++){
+            for(int j=0; j<2; j++) DB[i].ReceiveCard(GiveCard());
+        }
         for (int i=0; i<numplayer; i++){
             for(int j=0; j<2; j++) people[i].ReceiveCard(GiveCard());
         }
@@ -82,6 +87,12 @@ void Game::Start(int numplayer,int numbot,int round){
 
             //--------------------------------- โชว์ไพ่
             cout << "\n********* CARD & SCORE **********\n";
+            for (int i=0; i<1; i++){
+                DB[i].SumScore(Cardpoint);
+                DealerShowCard(DB[i]);
+                DealerShowScore(DB[i]);
+            }
+
             for (int i=0; i<numplayer; i++){
                 people[i].SumScore(Cardpoint);
                 PlayerShowCard(people[i]);
@@ -142,6 +153,7 @@ void Game::Start(int numplayer,int numbot,int round){
                 cardn = 0;
                 for (int i=0; i<numplayer; i++) people[i].SetDefault();
                 for (int i=0; i<numbot; i++) ai[i].SetDefault();
+                DB[0].SetDefault();
                 checktwointerrupt = false;
                 blackjack_flag = false;
                 indexplayersuvival.clear();
@@ -280,10 +292,16 @@ void Game::BotShowCard(Bot &ai){
 }
 
 void Game::BotShowScore(Bot &ai){
-    if(ai.survival){
-        if(ai.firstturn) ai.ShowScore(Cardpoint);
-        else ai.ShowScore();
-    }
+    ai.ShowScore();
+}
+
+void Game::DealerShowScore(Dealer &dealer){
+    if(dealer.firstturn) dealer.ShowScore(Cardpoint);
+    else dealer.ShowScore();
+}
+
+void Game::DealerShowCard(Dealer &dealer){
+    dealer.ShowCard(CardId);
 }
 
 bool Game::WhoSurvivalMoreover2(Player *people, Bot *ai){ // func นี้เอาไว้เช็คว่าเหลือผู้เล่นกับบอทกี่คนแล้ว จนกว่าจะเหลือ2 (มีผลใน loop gameplay)

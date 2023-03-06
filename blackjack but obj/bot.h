@@ -51,24 +51,19 @@ void Bot::AssignNumberbot(int num){
 }
 
 void Bot::ShowScore(){
-    cout << "Bot" << number << "'s Score is " << score << "\n\n";
+    cout << "Bot" << number << "'s Score is " << score << "\n";
     if(score == 21) blackjack = true;
 }
 
-void Bot::ShowScore(int Cardpoint[]){ // Overload Func Firstturn
-    cout << "Bot" << number << "'s Score is " << score - Cardpoint[onhand[0]] << '\n';
-    firstturn = false;
-}
+// void Bot::ShowScore(int Cardpoint[]){ // Overload Func Firstturn
+//     cout << "Bot" << number << "'s Score is " << score - Cardpoint[onhand[0]] << '\n';
+//     firstturn = false;
+// }
 
 void Bot::ShowCard(string CardId[]){
     cout << "\nBot" << number << "'s Card is => ";
     for (unsigned int i = 0; i < onhand.size(); i++){
-        if(firstturn){
-            if (onhand.size()-1 == i) cout << CardId[onhand[i]] << ' ';
-            else cout << "* "; 
-        }else{
-            cout << CardId[onhand[i]] << ' ';
-        }
+        cout << CardId[onhand[i]] << ' ';
     }
     cout << '\n';
 }
