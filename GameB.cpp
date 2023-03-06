@@ -93,16 +93,45 @@ int Givecard(string CardID[],int &cardn)
     return cardn-1;
 }
 
-void Propa(vector<int> handbot,bool Blag){ //true = drawnewcard
+class bot
+    {
+    private:
+        vector<int> bothand;
+        bool botdraw;
+        int betb; // bot's bet
+    public:
+        bot(string [], int &);
+        void Propa();
+        int show(int);
+        bool botact();
+        ~bot();
+    };
+
+bot::bot(string Card[],int &ncard)
+{
+    botdraw = true;
+    for (int i = 0; i < 2; i++)
+    {
+        bothand.push_back(Givecard(Card,ncard));
+    }
+    
+}
+
+bot::~bot()
+{
+
+}
+
+void bot::Propa(){ //true = drawnewcard
     int ace = 0;
     int sum = 0;
-    for (int i = 0; i < handbot.size(); i++)
+    for (int i = 0; i < bothand.size(); i++)
     {
-         if (Cardpoint[handbot[i]] == 1)
+         if (Cardpoint[bothand[i]] == 1)
          {
              ace++;
          }
-    sum += Cardpoint[handbot[i]];
+    sum += Cardpoint[bothand[i]];
     }
 
     for (int i1 = 0; i1 < ace; i1++)
@@ -113,16 +142,23 @@ void Propa(vector<int> handbot,bool Blag){ //true = drawnewcard
         }    
     }
     int ran = rand()%100 + 1;
-    cout <<ace <<' '<<sum<<' ';
     if ((21-sum)>= 10)
     {
-        Blag = true;
+        botdraw = true;
     }else if (((21-sum)/10.0*100)>=(ran))
     {
-        Blag = true;
+        botdraw = true;
     }else{
-        Blag = false;
+        botdraw = false;
     }
+}
+
+bool bot::botact(){
+    return botdraw;
+}
+
+int bot::show(int numcard){
+    return bothand[numcard];
 }
 
 int main()
@@ -135,26 +171,28 @@ int main()
     for (int i = 0; i < 2; i++)
     {
         playerhand.push_back(Givecard(CardId,cardn));
-        bothand.push_back(Givecard(CardId,cardn));
     }
+    bot bot1(CardId,cardn);
     cout <<CardId[playerhand[0]] <<' '<<playerhand[0] <<endl;
     cout << CardId[playerhand[1]] <<' '<<playerhand[1] <<endl;
-    cout <<CardId[bothand[0]] <<' '<<bothand[0] <<endl;//78-80ทดสอบดูค่าไพ่ที่ได้
-    cout << CardId[bothand[1]] <<' '<<bothand[1] <<endl;
-    
-    bool Phit = true ,Bhit = true;
+    bool Phit = true;
 
-    do
-    {
+    do{
        if (Phit)
-       {
-        GameP(Phit);
-       }
-       if (Bhit)
-       {
-        Propa(bothand,Bhit);
-       }
-    } while (Phit||Bhit);
+        {
+            GameP(Phit);
+        }
+       if (bot1.botact())
+        {
+            bot1.Propa();
+                if (bot1.botact())
+                {
+                    cout<<"Bot1 HIT";
+                }
+        
+        }
+       
+    } while (Phit||bot1.botact());
     
     
     return 0;
