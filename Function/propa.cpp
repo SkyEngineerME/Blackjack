@@ -34,6 +34,7 @@ class bot
     private:
         vector<int> bothand;
         bool botdraw;
+        int betb; // bot's bet
     public:
         bot(string [], int &);
         void Propa();
