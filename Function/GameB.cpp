@@ -175,24 +175,27 @@ int main()
     bot bot1(CardId,cardn);
     cout <<CardId[playerhand[0]] <<' '<<playerhand[0] <<endl;
     cout << CardId[playerhand[1]] <<' '<<playerhand[1] <<endl;
-    bool Phit = true;
+    bool Phit = true ,Bhit = bot1.botact();
 
     do{
        if (Phit)
         {
             GameP(Phit);
         }
-       if (bot1.botact())
+       if (Bhit)
         {
             bot1.Propa();
-                if (bot1.botact())
+            Bhit = bot1.botact();
+                if (Bhit)
                 {
                     cout<<"Bot1 HIT";
+                }else{
+                    cout<<"Stand";
                 }
         
         }
        
-    } while (Phit||bot1.botact());
+    } while (Phit||Bhit);
     
     
     return 0;
