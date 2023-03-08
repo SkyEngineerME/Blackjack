@@ -11,12 +11,10 @@ class Dealer{
         int score; 
         bool firstturn = true;
         bool survival = true;
-        bool blackjack = false;
         
         int GiveCard(int&);
         bool Probability();
         bool CheckScoreOver21();
-        void AssignNumberbot(int);
         void ShowScore();
         void ShowScore(int []);
         void ShowCard(string []);
@@ -38,7 +36,6 @@ void Dealer::SetDefault(){
     score = 0;
     firstturn = true;
     survival = true;
-    blackjack = false;
 }
 
 string Dealer::ShowName(){
@@ -113,12 +110,8 @@ bool Dealer::CheckScoreOver21(){
 
 void Dealer::GamePlay(string CardId[], int Cardpoint[], int &cardn){
     cout << "\n--------   Dealer's turn   --------";
-    bool firstturn_bot = true;
-        if(firstturn_bot){
-            ShowCard(CardId);
-            ShowScore();
-            firstturn_bot = false;
-        }
+    ShowCard(CardId);
+    ShowScore();
     while(true){
         DealerThinking();
         if(Probability()){

@@ -10,7 +10,6 @@ class Bot{
         vector<int> onhand;
     public:
         int score; // ตอนแรกเอาไว้ใน private แต่คิดว่าคงไม่จำเป็น เพราะเกมเราคงไม่มีใครมาแฮก555 แล้ว "game.h" จะมา access ค่าง่ายขึ้นด้วย
-        bool firstturn = true;
         bool survival = true;
         
         int GiveCard(int&);
@@ -36,7 +35,6 @@ int Bot::GiveCard(int &cardn){
 void Bot::SetDefault(){
     onhand.clear();
     score = 0;
-    firstturn = true;
     survival = true;
 }
 
@@ -107,12 +105,8 @@ bool Bot::CheckScoreOver21(){
 void Bot::GamePlay(string CardId[], int Cardpoint[], int &cardn){
     if(survival){
         cout << "\n--------   Bot" << number << "'s turn   --------";
-        bool firstturn_bot = true;
-        if(firstturn_bot){
-            ShowCard(CardId);
-            ShowScore();
-            firstturn_bot = false;
-        }
+        ShowCard(CardId);
+        ShowScore();
         while (true){
             BotThinking();
             if(Probability()){

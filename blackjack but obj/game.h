@@ -19,18 +19,13 @@ class Game{
                             1,2,3,4,5,6,7,8,9,10,10,10,10,
                             1,2,3,4,5,6,7,8,9,10,10,10,10};
 
-        vector<int> indexplayersuvival;
-        vector<int> indexbotsuvival;
         int bot,round;
         int cardn = 0;
-        int check;
         int GiveCard();
         bool blackjack_flag = false;
         bool tryagain = true;
         bool checktwointerrupt = false;
-        bool WhoSurvival(Player*, Bot*);
         void Start(int,int);
-        void AddNamePlayer(string);
         void ShuffleCard();
         void PlayerShowCard(Player*);
         void PlayerShowScore(Player*);
@@ -130,8 +125,6 @@ void Game::Start(int numbot,int round){
                 for (int i=0; i<numbot; i++) ai[i].SetDefault();
                 checktwointerrupt = false;
                 blackjack_flag = false;
-                indexplayersuvival.clear();
-                indexbotsuvival.clear();
 
                 cout << "\nPressed [Y] to continue .. ";
                 int key = _getch();
