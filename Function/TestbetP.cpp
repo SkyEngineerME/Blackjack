@@ -20,20 +20,24 @@ int main(){
     while(survive == true){
     //BetP(moneyP,betp);
     BetB(moneyB,betb);
-    swB = rand()%2;
-    Checkmoney(moneyB,betb,swB,survive);
-    i++;
+    i = rand()%3;
+    Checkmoney(moneyB,betb,i,survive);
     }
+
 return 0;
 
 }
 
-void Checkmoney(int &moneyPlayer,int &Betplayer,bool condition,bool &survive){
+void Checkmoney(int &moneyPlayer,int &Betplayer,int condition,bool &survive){
 
     if(condition == 0){
         cout << "Got" << endl;
         moneyPlayer += Betplayer*2;
-    }else{
+    }else if(condition == 1){
+        cout << "Draw" << endl;
+        moneyPlayer += Betplayer;
+    }
+    else{
         cout << "Lose" << endl;
     }
     if(moneyPlayer <= 0){
