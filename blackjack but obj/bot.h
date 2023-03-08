@@ -9,11 +9,13 @@ class Bot{
         int number;
         vector<int> onhand;
     public:
+        int moneyb;
+        int betb;
         int score; // ตอนแรกเอาไว้ใน private แต่คิดว่าคงไม่จำเป็น เพราะเกมเราคงไม่มีใครมาแฮก555 แล้ว "game.h" จะมา access ค่าง่ายขึ้นด้วย
         bool firstturn = true;
         bool survival = true;
         bool blackjack = false;
-        
+        void BetB();
         int GiveCard(int&);
         bool Probability();
         bool CheckScoreOver21();
@@ -100,6 +102,33 @@ void Bot::BotThinking(){
         cout << "Bot Thinking" << dot << "\r";
         Sleep(200);
     }
+}
+
+void Bot::BetB(){
+    HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(h,13);
+    cout << "------------------------------------\n";
+        cout << "[ ";
+        SetConsoleTextAttribute(h,3);
+        cout << moneyb ;
+        SetConsoleTextAttribute(h,13);
+        cout << " ] ";
+        while(betb > moneyb){
+        betb = (rand()%9 + 1);
+        }
+        moneyb -= betb;
+        SetConsoleTextAttribute(h,13);
+        cout << "Bot No." << " bets ";
+        SetConsoleTextAttribute(h,3);
+        cout << betb<< "$ ";
+        SetConsoleTextAttribute(h,13);
+        cout << "(left ";
+        SetConsoleTextAttribute(h,4);
+        cout << moneyb <<"$";
+        SetConsoleTextAttribute(h,13);
+        cout << ")\n";
+    cout << "------------------------------------\n";
+    SetConsoleTextAttribute(h,7);
 }
 
 bool Bot::CheckScoreOver21(){
