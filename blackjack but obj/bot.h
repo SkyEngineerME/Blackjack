@@ -12,7 +12,6 @@ class Bot{
         int score; // ตอนแรกเอาไว้ใน private แต่คิดว่าคงไม่จำเป็น เพราะเกมเราคงไม่มีใครมาแฮก555 แล้ว "game.h" จะมา access ค่าง่ายขึ้นด้วย
         bool firstturn = true;
         bool survival = true;
-        bool blackjack = false;
         
         int GiveCard(int&);
         bool Probability();
@@ -39,7 +38,6 @@ void Bot::SetDefault(){
     score = 0;
     firstturn = true;
     survival = true;
-    blackjack = false;
 }
 
 string Bot::ShowName(){
@@ -51,25 +49,13 @@ void Bot::AssignNumberbot(int num){
 }
 
 void Bot::ShowScore(){
-    cout << "Bot" << number << "'s Score is " << score << "\n\n";
-    if(score == 21) blackjack = true;
-}
-
-void Bot::ShowScore(int Cardpoint[]){ // Overload Func Firstturn
-    cout << "Bot" << number << "'s Score is " << score - Cardpoint[onhand[0]] << '\n';
-    firstturn = false;
+    cout << "Bot" << number << "'s Score is " << score << "\n";
 }
 
 void Bot::ShowCard(string CardId[]){
     cout << "\nBot" << number << "'s Card is => ";
     for (unsigned int i = 0; i < onhand.size(); i++){
-        if(firstturn){
-            //if (onhand.size()-1 == i) 
-            cout << CardId[onhand[i]] << ' ';
-            //else cout << "* "; 
-        }else{
-            cout << CardId[onhand[i]] << ' ';
-        }
+        cout << CardId[onhand[i]] << ' ';
     }
     cout << '\n';
 }

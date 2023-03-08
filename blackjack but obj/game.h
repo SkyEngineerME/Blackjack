@@ -61,7 +61,9 @@ void Game::Start(int numbot,int round){
     while(tryagain){
         system("cls");
         ShuffleCard();
-        cout << "\n--------Turn "<< r+1 << "--------";
+        cout << "\n----------------------";
+        cout << "\n-       Turn "<< r+1 << "       -";
+        cout << "\n----------------------\n";
        
         for(int j=0; j<2; j++) people->ReceiveCard(GiveCard());
 
@@ -88,23 +90,24 @@ void Game::Start(int numbot,int round){
         DealerShowScore(dealer);
 
     
-        cout << "\n********************************\n\n";
+        cout << "\n********************************\n";
         
         // Blackjack Zone
         if(people->score == 21){
-            cout << ">>>>>>>>>>>>>> "<< people->ShowName() <<" Blackjack!! <<<<<<<<<<<<<\n";
+            cout << "\n>>>>>>>>>>>>>> "<< people->ShowName() <<" Blackjack!! <<<<<<<<<<<<<\n";
             blackjack_flag = true;
-        }else if(dealer->score == 21){
-            cout << ">>>>>>>>>>>>>> "<< dealer->ShowName() <<" Blackjack!! <<<<<<<<<<<<<\n";
+        }
+        if(dealer->score == 21){
+            cout << "\n>>>>>>>>>>>>>> "<< dealer->ShowName() <<" Blackjack!! <<<<<<<<<<<<<\n";
             blackjack_flag = true;
-        }else{
-            for (int i=0; i<numbot; i++){
-                if(ai[i].score == 21){
-                    cout << ">>>>>>>>>>>>>> "<< ai[i].ShowName() <<" Blackjack!! <<<<<<<<<<<<<\n";
-                    blackjack_flag = true;
-                }
+        }
+        for (int i=0; i<numbot; i++){
+            if(ai[i].score == 21){
+                cout << "\n>>>>>>>>>>>>>> "<< ai[i].ShowName() <<" Blackjack!! <<<<<<<<<<<<<\n";
+                blackjack_flag = true;
             }
-        }    
+        }
+            
         //---------------------------------
         if(!blackjack_flag){
             people->GamePlay(CardId, Cardpoint, cardn);
@@ -130,31 +133,38 @@ void Game::Start(int numbot,int round){
                 indexplayersuvival.clear();
                 indexbotsuvival.clear();
 
-                string ck;
-                cout << "\nNEXT ROUND [Y] : ";
-                getline(cin,ck);
-                while(true){
-                    if(toupper(ck[0]) == 'Y'){
-                        break;
-                    }
-                    cout << "Pressed [Y] to continue : ";
-                    getline(cin,ck);
+                cout << "\nPressed [Y] to continue .. ";
+                int key = _getch();
+                if(key == 121 || key == 89){
+                    tryagain = true;
                 }
-
-                tryagain = true;
+                else{
+                    while(true){
+                        cout << "\nInvalid Command !! Please Pressed [Y] to continue .. ";
+                        int key = _getch();
+                        if(key == 121 || key == 89){
+                            tryagain = true;
+                            break;
+                        }
+                    }
+                }
                 break;
             }else if(r >= round){
-                string ck;
-                cout << "\nGO TO HOMEPAGE [Y] : ";
-                getline(cin,ck);
-                while(true){
-                    if(toupper(ck[0]) == 'Y'){
-                        break;
-                    }
-                    cout << "Pressed [Y] to continue ";
-                    getline(cin,ck);
+                cout << "\nGo to HOMEPAGE [Y] .. ";
+                int key = _getch();
+                if(key == 121 || key == 89){
+                    tryagain = false;
                 }
-                tryagain = false;
+                else{
+                    while(true){
+                        cout << "\nInvalid Command !! Please Pressed [Y] to continue .. ";
+                        int key = _getch();
+                        if(key == 121 || key == 89){
+                            tryagain = false;
+                            break;
+                        }
+                    }
+                }
                 break;
             }else{
                 cout << "Invalid Command !! Please type 'y' or 'n' only.";

@@ -47,10 +47,9 @@ string Dealer::ShowName(){
 
 void Dealer::ShowScore(){
     cout << "Dealer's Score is " << score << "\n\n";
-    if(score == 21) blackjack = true;
 }
 
-void Dealer::ShowScore(int Cardpoint[]){ // Overload Func Firstturn
+void Dealer::ShowScore(int Cardpoint[]){ // Overload Func First turn
     cout << "Dealer's Score is " << score - Cardpoint[onhand[0]] << '\n';
     firstturn = false;
 }
