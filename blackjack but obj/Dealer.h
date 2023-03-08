@@ -107,9 +107,6 @@ bool Dealer::CheckScoreOver21(){
         cout << "\n!!!!!  Dealer's lost  !!!!!\n";
         survival = false;
         return true;
-    }else if(score == 21){
-        blackjack = true;
-        return true;
     }else{
         return false;
     }
@@ -118,8 +115,11 @@ bool Dealer::CheckScoreOver21(){
 void Dealer::GamePlay(string CardId[], int Cardpoint[], int &cardn){
     cout << "\n--------   Dealer's turn   --------";
     bool firstturn_bot = true;
-    ShowCard(CardId);
-    ShowScore();
+        if(firstturn_bot){
+            ShowCard(CardId);
+            ShowScore();
+            firstturn_bot = false;
+        }
     while(true){
         DealerThinking();
         if(Probability()){

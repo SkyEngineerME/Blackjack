@@ -136,9 +136,6 @@ bool Bot::CheckScoreOver21(){
         cout << "\n!!!!!  Bot" << number << " lost  !!!!!\n";
         survival = false;
         return true;
-    }else if(score == 21){
-        blackjack = true;
-        return true;
     }else{
         return false;
     }

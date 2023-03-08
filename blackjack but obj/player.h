@@ -87,9 +87,6 @@ bool Player::CheckScoreOver21(){
         cout << "\n!!!!!  " << name << " lost  !!!!!\n";
         survival = false;
         return true;
-    }else if(score == 21){
-        blackjack = true;
-        return true;
     }else{
         return false;
     }
@@ -192,7 +189,7 @@ void Player::GamePlay(string CardId[], int Cardpoint[], int &cardn){
                     SumScore(Cardpoint);
                     ShowCard(CardId);
                     ShowScore();
-                    if(CheckScoreOver21() || blackjack) break;
+                    if(CheckScoreOver21()) break;
                     else{
                         check = true;
                         continue;
