@@ -6,69 +6,73 @@
 
 using namespace std;
 
-void BetB(int[],int[],int);
-void BetP(int&,double&);
-void Checkmoney(int&,double&,bool,bool&);
+void BetB(int&,int&);
+void BetP(int&,int&);
+void Checkmoney(int&,int&,bool,bool&);
 
 int main(){
-    int moneyP =1000;
-    bool sw = false;
+    srand(time(0));
+    int moneyP =100,moneyB = 100,i =0;
+    bool swP = false;
+    bool swB = false;
     bool survive = true;
-    double betp;
-    BetB()
+    int betp,betb;
     while(survive == true){
-    BetP(moneyP,betp);
-    sw = rand()%2;
-    Checkmoney(moneyP,betp,sw,survive);
+    //BetP(moneyP,betp);
+    BetB(moneyB,betb);
+    swB = rand()%2;
+    Checkmoney(moneyB,betb,swB,survive);
+    i++;
     }
 return 0;
 
 }
 
-void Checkmoney(int &moneyPlayer,double &Betplayer,bool condition,bool &survive){
+void Checkmoney(int &moneyPlayer,int &Betplayer,bool condition,bool &survive){
 
     if(condition == 0){
         cout << "Got" << endl;
         moneyPlayer += Betplayer*2;
     }else{
         cout << "Lose" << endl;
-        //moneyPlayer += Betplayer;
-        //moneyPlayer -= Betplayer;
     }
-    if(moneyPlayer == 0){
+    if(moneyPlayer <= 0){
         cout << "Lose Game bye" << endl;
         survive = false;
     }
 
 }
 
-void BetB(int moneyb[], int betb[], int Nbot = 1){
+void BetB(int &moneyb, int &betb){
 
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-    srand(time(0));
     SetConsoleTextAttribute(h,13);
     cout << "------------------------------------\n";
-    for(int i = 0; i < Nbot; i++){
-        betb[i] = (moneyb[i]/10)*(rand()%9 + 1);
-        moneyb[i] = moneyb[i] - betb[i];
-        SetConsoleTextAttribute(h,13);
-        cout << "Bot No." << i+1 << " bets ";
+
+        cout << "[ ";
         SetConsoleTextAttribute(h,3);
-        cout << betb[i] << "$ ";
+        cout << moneyb ;
+        SetConsoleTextAttribute(h,13);
+        cout << " ] ";
+        while(betb > moneyb){
+        betb = (rand()%9 + 1);
+        }
+        moneyb -= betb;
+        SetConsoleTextAttribute(h,13);
+        cout << "Bot No." << " bets ";
+        SetConsoleTextAttribute(h,3);
+        cout << betb<< "$ ";
         SetConsoleTextAttribute(h,13);
         cout << "(left ";
         SetConsoleTextAttribute(h,4);
-        cout << moneyb[i] <<"$";
+        cout << moneyb <<"$";
         SetConsoleTextAttribute(h,13);
         cout << ")\n";
-
-    }
     cout << "------------------------------------\n";
     SetConsoleTextAttribute(h,7);
 }
 
-
-void BetP(int &moneyp,double &betp){
+void BetP(int &moneyp,int &betp){
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(h,14);
     cout << "----888-------------------------888----\n";
@@ -86,7 +90,7 @@ void BetP(int &moneyp,double &betp){
     string text;
     getline(cin,text);
     betp = atof(text.c_str());
-    if(betp > 0 && betp <= moneyp && betp - (int) betp == 0) {
+    if(betp > 0 && betp <= moneyp && betp - (int) betp == 0 && betp <= 10){
         moneyp = moneyp-betp;
         SetConsoleTextAttribute(h,10);
         cout << "\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n";
@@ -102,6 +106,12 @@ void BetP(int &moneyp,double &betp){
         cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n";
         SetConsoleTextAttribute(h,7);
         break;
+    }
+    else if(betp > 10){
+        SetConsoleTextAttribute(h,4);
+        cout << "\n------------------------------------\n";
+        cout << "$$$ Please Bet between [1-10]!!! $$$\n";
+        cout << "--------------------------------------\n\n";
     }
     else if(betp > moneyp){
         SetConsoleTextAttribute(h,4);
