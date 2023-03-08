@@ -15,23 +15,6 @@ int main(){
         bool flagfour = false;
         system("cls");
         cout << "----------------  Game init  ----------------\n";
-       /* while (true)
-        {
-            cout << "Number of Player : ";
-            getline(cin,input);
-
-            if(input.size() > 1 || isdigit(input[0]) == false){
-                cout << "Invalid Input !! Please type number [1-4]\n"; 
-            }else{
-                numplayer = stoi(input);
-                if (numplayer == 4){
-                    flagfour = true;
-                    break;
-                } 
-                else if(numplayer < 1 || numplayer > 4) cout << "Invalid Input !! Please type number [1-4]\n";
-                else break;
-            }
-        }*/
         cout << "Choose bot between [1-3]" << " Unit.\n";
         while (!flagfour)
         {
@@ -49,7 +32,7 @@ int main(){
         }
         cout << "::: How many round you want to play between [1-50] :::\n";
         cout <<"Round: ";
-        cin >> round;
+        cin >> round; // เจอ bug นะ ใส่อะไรที่ไม่ใช่เลขแล้วมันค้าง
         while(round < 1 || round > 50){
             cout << "!!! Please choose between [1-50] !!!\n";
             cout <<"Round: ";
@@ -57,7 +40,7 @@ int main(){
         }
 
         cin.ignore();
-        obj.Start(1,numbot,round);
+        obj.Start(numbot,round);
         selectplay = menu();
     }
 

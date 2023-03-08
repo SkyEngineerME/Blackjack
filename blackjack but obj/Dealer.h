@@ -98,7 +98,7 @@ void Dealer::DealerThinking(){
     for (int i=0; i<6; i++){
         dot += ". ";
         cout << "Dealer Thinking" << dot << "\r";
-        //Sleep(200);
+        Sleep(200);
     }
 }
 
@@ -116,28 +116,25 @@ bool Dealer::CheckScoreOver21(){
 }
 
 void Dealer::GamePlay(string CardId[], int Cardpoint[], int &cardn){
-    if(survival){
-        cout << "\n--------   Dealer's turn   --------";
-        bool firstturn_bot = true;
-        if(firstturn_bot){
+    cout << "\n--------   Dealer's turn   --------";
+    bool firstturn_bot = true;
+    ShowCard(CardId);
+    ShowScore();
+    while(true){
+        DealerThinking();
+        if(Probability()){
+            cout << "\nDealer Selected >> Hit\n\n";
+            onhand.push_back(GiveCard(cardn));
+            SumScore(Cardpoint);
             ShowCard(CardId);
             ShowScore();
-            firstturn_bot = false;
-        }
-        while (true){
-            DealerThinking();
-            if(Probability()){
-                cout << "\nDealer Selected >> Hit\n\n";
-                onhand.push_back(GiveCard(cardn));
-                SumScore(Cardpoint);
-                ShowCard(CardId);
-                ShowScore();
-                if(CheckScoreOver21()) break;
-                else continue;
-            }else{
-                cout << "\nDealer Selected >> Stand\n\n";
-                break;
-            }
+            if(CheckScoreOver21()) break;
+            else continue;
+        }else{
+            cout << "\nDealer Selected >> Stand\n\n";
+            firstturn = true;
+            break;
         }
     }
+    
 }
