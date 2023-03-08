@@ -37,7 +37,7 @@ class Game{
         void PlayerShowScore(Player&);
         void BotShowCard(Bot&);
         void BotShowScore(Bot&);
-        void Winner(Player*, Bot*);
+        void Winner(Player*, Bot*, Dealer*);
         void DealerShowCard(Dealer&);
         void DealerShowScore(Dealer&);
 };
@@ -140,7 +140,7 @@ void Game::Start(int numplayer,int numbot,int round){
 
         ///////////////////////////////////////////
 
-        Winner(people,ai);
+        Winner(people,ai,DB);
 
         ///////////////////////////////////////////
 
@@ -176,16 +176,26 @@ void Game::Start(int numplayer,int numbot,int round){
     delete [] DB;
 }
 
-void Game::Winner(Player *people, Bot *ai){
-    //check who blackjack
+void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
     int count = 0;
-    bool auth;
+    int auth;
     bool flag_detect = false;
-    for (; count<player; count++){
-        if(people[count].blackjack){
-            flag_detect = true;
-            auth = true; //บอกว่าเป็น player
+    for (; count<1; count++){
+        if(dealer[0].blackjack){
+            flag_detect = true; //dealer bj
+            auth = 0;
             break;
+        }
+    }
+
+    if(!flag_detect){
+        count = 0;
+        for (; count<player; count++){
+            if(people[count].blackjack){
+                flag_detect = true;
+                auth = 1; //บอกว่าเป็น player
+                break;
+            }
         }
     }
 
@@ -194,7 +204,7 @@ void Game::Winner(Player *people, Bot *ai){
         for (; count<bot; count++){
             if(ai[count].blackjack){
                 flag_detect = true;
-                auth = false; //บอกว่าเป็น bot
+                auth = 2; //บอกว่าเป็น bot
                 break;
             }
         }
@@ -203,63 +213,112 @@ void Game::Winner(Player *people, Bot *ai){
     //ถ้า flag_detect ยังเป็น false อยู่แสดงว่าไม่มีคนไหน blackjack
     if(flag_detect){
         string namewin;
-        if(auth) namewin = people[count].ShowName();
-        else namewin = ai[count].ShowName();
+        switch (auth)
+        {
+        case 0:
+            namewin = dealer[0].ShowName();
+            break;
+        case 1:
+            namewin = people[count].ShowName();
+            break;
+        case 2:
+            namewin = ai[count].ShowName();
+            break;
+        }
         cout << "\nvvvvvvvv  " << namewin << " Blackjack!!  vvvvvvvv\n";
         cout << "\n" << "@@@@@@@ The Winner This Game >> " << namewin << " << @@@@@@@\n";
     }else{
-        vector<int> player_score;
         vector<int> bot_score;
-        if(check==2){ // มี 2 คนที่เหลือรอด คะแนนใครมากกว่าก็ชนะ
-            for(unsigned int i=0; i<indexplayersuvival.size(); i++) player_score.push_back(people[indexplayersuvival[i]].score);
-            for(unsigned int i=0; i<indexbotsuvival.size(); i++)    bot_score.push_back(ai[indexbotsuvival[i]].score);
-
-            if(player_score.size() > bot_score.size()){ //ฝั่งที่รอดเป็น player
-                if(player_score[0] > player_score[1]){
-                    cout << "!!!!!  " << people[indexplayersuvival[1]].ShowName() << " lost  !!!!!\n";
-                    cout << "\n" << "@@@@@@@ The Winner This Game >> " << people[indexplayersuvival[0]].ShowName() << " << @@@@@@@\n";
-                }else if (player_score[0] == player_score[1]){
-                    cout << "\n" << "@@@@@@@       Draw!!!     @@@@@@@A2\n";
-                }else{
-                    cout << "!!!!!  " << people[indexplayersuvival[0]].ShowName() << " lost  !!!!!\n";
-                    cout << "\n" << "@@@@@@@ The Winner This Game >> " << people[indexplayersuvival[1]].ShowName() << " << @@@@@@@\n";
-                }
-            }else if(player_score.size() == bot_score.size()){ //มีฝั่ง player 1 คน และ bot 1 ตัว
-                if(player_score[0] > bot_score[0]){
-                    cout << "!!!!!  " << ai[indexbotsuvival[0]].ShowName() << " lost  !!!!!\n";
-                    cout << "\n" << "@@@@@@@ The Winner This Game >> " << people[indexplayersuvival[0]].ShowName() << " << @@@@@@A\n";
-                }else if (player_score[0] == bot_score[0]){
-                    cout << "\n" << "@@@@@@@       Draw!!!     @@@@@@A1\n";
-                }else{
-                    cout << "!!!!!  " << people[indexplayersuvival[0]].ShowName() << " lost  !!!!!\n";
-                    cout << "\n" << "@@@@@@@ The Winner This Game >> " << ai[indexbotsuvival[0]].ShowName() << " << @@@@@@B\n";
-                }
-            }else{ //ฝั่งที่รอดเป็น bot
-                if(bot_score[0] > bot_score[1]){
-                    cout << "!!!!!  " << ai[indexbotsuvival[1]].ShowName() << " lost  !!!!!\n";
-                    cout << "\n" << "@@@@@@@ The Winner This Game >> " << ai[indexbotsuvival[0]].ShowName() << " << @@@@@@C\n";
-                }else if (bot_score[0] == bot_score[1]){
-                    cout << "\n" << "@@@@@@@       Draw!!!     @@@@@@B2\n";
-                }else{
-                    cout << "!!!!!  " << ai[indexbotsuvival[0]].ShowName() << " lost  !!!!!\n";
-                    cout << "\n" << "@@@@@@@ The Winner This Game >> " << ai[indexbotsuvival[1]].ShowName() << " << @@@@@@D\n";
-                }
-            }
-
-        }else{  // มีคนเดียวที่รอด คนนั้นแหละชนะ
-            if(indexplayersuvival.size() > indexbotsuvival.size()){
-                cout << "\n" << "@@@@@@@ The Winner This Game >> " << people[indexplayersuvival[0]].ShowName() << " << @@@@@@E\n";
-            }else{
-                cout << "\n" << "@@@@@@@ The Winner This Game >> " << ai[indexbotsuvival[0]].ShowName() << " << @@@@@@F\n";
-            }
-        }
-        /*
+        for(unsigned int i=0; i<indexbotsuvival.size(); i++) bot_score.push_back(ai[indexbotsuvival[i]].score);
         
-        ตัวอักษรที่อยู่ข้างหลัง เอาไว้ debug เฉยๆนะ บางที่ก็ไม่รู้ว่ามันเข้าไปในเงื่อนไขไหน 5555 ถ้าเทสทั้งหมดแล้วบัคมีน้อยจริงๆค่อยลบทิ้ง
-        
-        */
+
     }
 }
+
+// void Game::Winner(Player *people, Bot *ai){
+//     //check who blackjack
+//     int count = 0;
+//     bool auth;
+//     bool flag_detect = false;
+//     for (; count<player; count++){
+//         if(people[count].blackjack){
+//             flag_detect = true;
+//             auth = true; //บอกว่าเป็น player
+//             break;
+//         }
+//     }
+
+//     if(!flag_detect){
+//         count = 0;
+//         for (; count<bot; count++){
+//             if(ai[count].blackjack){
+//                 flag_detect = true;
+//                 auth = false; //บอกว่าเป็น bot
+//                 break;
+//             }
+//         }
+//     }
+
+//     //ถ้า flag_detect ยังเป็น false อยู่แสดงว่าไม่มีคนไหน blackjack
+//     if(flag_detect){
+//         string namewin;
+//         if(auth) namewin = people[count].ShowName();
+//         else namewin = ai[count].ShowName();
+//         cout << "\nvvvvvvvv  " << namewin << " Blackjack!!  vvvvvvvv\n";
+//         cout << "\n" << "@@@@@@@ The Winner This Game >> " << namewin << " << @@@@@@@\n";
+//     }else{
+//         vector<int> player_score;
+//         vector<int> bot_score;
+//         if(check==2){ // มี 2 คนที่เหลือรอด คะแนนใครมากกว่าก็ชนะ
+//             for(unsigned int i=0; i<indexplayersuvival.size(); i++) player_score.push_back(people[indexplayersuvival[i]].score);
+//             for(unsigned int i=0; i<indexbotsuvival.size(); i++)    bot_score.push_back(ai[indexbotsuvival[i]].score);
+
+//             if(player_score.size() > bot_score.size()){ //ฝั่งที่รอดเป็น player
+//                 if(player_score[0] > player_score[1]){
+//                     cout << "!!!!!  " << people[indexplayersuvival[1]].ShowName() << " lost  !!!!!\n";
+//                     cout << "\n" << "@@@@@@@ The Winner This Game >> " << people[indexplayersuvival[0]].ShowName() << " << @@@@@@@\n";
+//                 }else if (player_score[0] == player_score[1]){
+//                     cout << "\n" << "@@@@@@@       Draw!!!     @@@@@@@A2\n";
+//                 }else{
+//                     cout << "!!!!!  " << people[indexplayersuvival[0]].ShowName() << " lost  !!!!!\n";
+//                     cout << "\n" << "@@@@@@@ The Winner This Game >> " << people[indexplayersuvival[1]].ShowName() << " << @@@@@@@\n";
+//                 }
+//             }else if(player_score.size() == bot_score.size()){ //มีฝั่ง player 1 คน และ bot 1 ตัว
+//                 if(player_score[0] > bot_score[0]){
+//                     cout << "!!!!!  " << ai[indexbotsuvival[0]].ShowName() << " lost  !!!!!\n";
+//                     cout << "\n" << "@@@@@@@ The Winner This Game >> " << people[indexplayersuvival[0]].ShowName() << " << @@@@@@A\n";
+//                 }else if (player_score[0] == bot_score[0]){
+//                     cout << "\n" << "@@@@@@@       Draw!!!     @@@@@@A1\n";
+//                 }else{
+//                     cout << "!!!!!  " << people[indexplayersuvival[0]].ShowName() << " lost  !!!!!\n";
+//                     cout << "\n" << "@@@@@@@ The Winner This Game >> " << ai[indexbotsuvival[0]].ShowName() << " << @@@@@@B\n";
+//                 }
+//             }else{ //ฝั่งที่รอดเป็น bot
+//                 if(bot_score[0] > bot_score[1]){
+//                     cout << "!!!!!  " << ai[indexbotsuvival[1]].ShowName() << " lost  !!!!!\n";
+//                     cout << "\n" << "@@@@@@@ The Winner This Game >> " << ai[indexbotsuvival[0]].ShowName() << " << @@@@@@C\n";
+//                 }else if (bot_score[0] == bot_score[1]){
+//                     cout << "\n" << "@@@@@@@       Draw!!!     @@@@@@B2\n";
+//                 }else{
+//                     cout << "!!!!!  " << ai[indexbotsuvival[0]].ShowName() << " lost  !!!!!\n";
+//                     cout << "\n" << "@@@@@@@ The Winner This Game >> " << ai[indexbotsuvival[1]].ShowName() << " << @@@@@@D\n";
+//                 }
+//             }
+
+//         }else{  // มีคนเดียวที่รอด คนนั้นแหละชนะ
+//             if(indexplayersuvival.size() > indexbotsuvival.size()){
+//                 cout << "\n" << "@@@@@@@ The Winner This Game >> " << people[indexplayersuvival[0]].ShowName() << " << @@@@@@E\n";
+//             }else{
+//                 cout << "\n" << "@@@@@@@ The Winner This Game >> " << ai[indexbotsuvival[0]].ShowName() << " << @@@@@@F\n";
+//             }
+//         }
+//         /*
+        
+//         ตัวอักษรที่อยู่ข้างหลัง เอาไว้ debug เฉยๆนะ บางที่ก็ไม่รู้ว่ามันเข้าไปในเงื่อนไขไหน 5555 ถ้าเทสทั้งหมดแล้วบัคมีน้อยจริงๆค่อยลบทิ้ง
+        
+//         */
+//     }
+// }
 
 void Game::AddNamePlayer(string tempname){
     name.push_back(tempname);
