@@ -38,7 +38,7 @@ class Game{
 
 void Game::Start(int numbot,int round){
 
-    int r = 0;
+    int counter = 0;
     Player *people = new Player;
     Bot *ai = new Bot[numbot];
     Dealer *dealer = new Dealer;
@@ -55,17 +55,15 @@ void Game::Start(int numbot,int round){
 
     while(tryagain){
         system("cls");
+
         ShuffleCard();
         cout << "\n----------------------";
-        cout << "\n-       Turn "<< r+1 << "       -";
+        cout << "\n|       Turn "<< counter+1 << "       |";
         cout << "\n----------------------\n";
        
+        //--------------------------------- แจกการ์ด
         for(int j=0; j<2; j++) people->ReceiveCard(GiveCard());
-
-        for (int i=0; i<numbot; i++){
-            for(int j=0; j<2; j++) ai[i].ReceiveCard(GiveCard());
-        }
-
+        for (int i=0; i<numbot; i++) for(int j=0; j<2; j++) ai[i].ReceiveCard(GiveCard());
         for(int j=0; j<2; j++) dealer->ReceiveCard(GiveCard());
 
         //--------------------------------- โชว์ไพ่
@@ -87,7 +85,7 @@ void Game::Start(int numbot,int round){
     
         cout << "\n********************************\n";
         
-        // Blackjack Zone
+        //--------------------------------- เช็คหาคนที่ blackjack ในตาแรกเท่านั้น
         if(people->score == 21){
             cout << "\n>>>>>>>>>>>>>> "<< people->ShowName() <<" Blackjack!! <<<<<<<<<<<<<\n";
             blackjack_flag = true;
@@ -103,7 +101,7 @@ void Game::Start(int numbot,int round){
             }
         }
             
-        //---------------------------------
+        //--------------------------------- GAMEPLAY
         if(!blackjack_flag){
             people->GamePlay(CardId, Cardpoint, cardn);
             
@@ -114,57 +112,50 @@ void Game::Start(int numbot,int round){
             dealer->GamePlay(CardId, Cardpoint, cardn);
         }
 
+        //--------------------------------- โชว์คนแพ้ชนะ
         Winner(people,ai,dealer);
-
-        r++;
-        while(true){
-            if(r < round){
-                cardn = 0;
-                people->SetDefault();
-                dealer->SetDefault();
-                for (int i=0; i<numbot; i++) ai[i].SetDefault();
-                checktwointerrupt = false;
-                blackjack_flag = false;
-
-                cout << "\nPressed [Y] to continue .. ";
-                int key = _getch();
-                if(key == 121 || key == 89){
-                    tryagain = true;
-                }
-                else{
-                    while(true){
-                        cout << "\nInvalid Command !! Please Pressed [Y] to continue .. ";
-                        int key = _getch();
-                        if(key == 121 || key == 89){
-                            tryagain = true;
-                            break;
-                        }
+        //---------------------------------
+        
+        counter++;
+        if(counter >= round){
+            cout << "\nGo to HOMEPAGE [Y] .. " << '\r';
+            int key = _getch();
+            if(key == 121 || key == 89){
+                tryagain = false;
+            }
+            else{
+                while(true){
+                    cout << "Invalid Command !! Please Pressed [Y] to continue .. " << '\r';
+                    int key = _getch();
+                    if(key == 121 || key == 89){
+                        tryagain = false;
+                        break;
                     }
                 }
-                break;
-            }else if(r >= round){
-                cout << "\nGo to HOMEPAGE [Y] .. ";
-                int key = _getch();
-                if(key == 121 || key == 89){
-                    tryagain = false;
-                }
-                else{
-                    while(true){
-                        cout << "\nInvalid Command !! Please Pressed [Y] to continue .. ";
-                        int key = _getch();
-                        if(key == 121 || key == 89){
-                            tryagain = false;
-                            break;
-                        }
+            }
+        }else{
+            cardn = 0;
+            people->SetDefault();
+            dealer->SetDefault();
+            for (int i=0; i<numbot; i++) ai[i].SetDefault();
+            blackjack_flag = false;
+
+            cout << "\nPressed [Y] to continue .. " << '\r';
+            int key = _getch();
+            if(key == 121 || key == 89){
+                tryagain = true;
+            }
+            else{
+                while(true){
+                    cout << "Invalid Command !! Please Pressed [Y] to continue .. " << '\r';
+                    int key = _getch();
+                    if(key == 121 || key == 89){
+                        tryagain = true;
+                        break;
                     }
                 }
-                break;
-            }else{
-                cout << "Invalid Command !! Please type 'y' or 'n' only.";
-                break;
             }
         }
-        
     }
     delete [] ai;
     delete people;
@@ -175,6 +166,7 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
     cout << "\n------ SCREEN -------\n";
     
     if(blackjack_flag){
+        // ถ้ามีใคร blackjack ในตาแรก คนนั้นชนะ
         if(people->score == 21){
             cout << "* " << people->ShowName() << " WIN\n";
         }else{

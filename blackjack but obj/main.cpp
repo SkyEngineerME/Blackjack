@@ -49,32 +49,20 @@ int main(){
 
 bool menu(){
     system("cls");
-    cout << "-------------  Main Menu  ----------------\n";
-    bool hit = true;
-    cout << "\t[*] NewGame ";
-    cout << "or";
-    cout << " [ ] Exit" << '\r';
+    cout << "-------------  BLACKJACK  ---------------\n";
+    cout << "|                                       |\n";
+    cout << "|             [N] NewGame               |\n";
+    cout << "|             [E] Exit                  |\n";
+    cout << "|                                       |\n";
+    cout << "-----------------------------------------\n";
     while (true){
         int key = _getch();
-        if (key == 224){
-            key = _getch();
-            if(key == 75){ // Left arrow key
-                cout << "\t[*] NewGame ";
-                cout << "or";
-                cout << " [ ] Exit" << '\r';
-                hit = true;
-            }else if(key == 77){ // Right arrow key
-                cout << "\t[ ] NewGame ";
-                cout << "or";
-                cout << " [*] Exit" << '\r';
-                hit = false;
-            }
-        }else if (key == 13){ // Enter Key
-            if(hit){
-                return true;
-            }else{
-                return false;
-            }
+        if (key == 110 || key == 78){
+            return true;
+        }else if (key == 211 || key == 174 || key == 101 || key == 69){
+            return false;
+        }else{
+            cout << "Invalid Command !! Please Pressed [Y] or [E] to continue .. " << '\r';
         }
     }
 }
