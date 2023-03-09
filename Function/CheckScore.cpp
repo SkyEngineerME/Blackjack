@@ -2,7 +2,7 @@
 #include <string>
 using namespace std;
 
-void CheckScore(int &Ds,int &Ps,int &B1s,int &B2s,int &B3s){
+void CheckScore(int Ds,int Ps,int B1s,int B2s,int B3s,int &conditionPs,int &conditionB1s,int &conditionB2s,int &conditionB3s){
  int conditionDs = 3,conditionPs = 3,conditionB1s = 3,conditionB2s = 3,conditionB3s = 3;
  if(Ds>21){
     if(Ps<Ds){
