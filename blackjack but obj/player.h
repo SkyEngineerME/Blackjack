@@ -11,15 +11,14 @@ class Player{
         string name;
         vector<int> onhand;
         bool hit = true;
-        int moneyp;
-        int betp;
     public:
+        int money;
+        int bet;
         int score;
         bool survival = true;
         bool blackjack = false;
         int GiveCard(int&);
         bool CheckScoreOver21();
-        void AssignName(string);
         void ShowScore();
         void ShowCard(string []);
         void GamePlay(string [], int [], int&);
@@ -27,9 +26,16 @@ class Player{
         void SumScore(int []);
         void SetDefault();
         string ShowName();
-        void BetP();
+        void PlayerBet();
+        Player();
         
 };
+
+Player::Player(){
+    money = 2000;
+    cout << "::: Type your name ::: >> ";
+    getline(cin,name);
+}
 
 int Player::GiveCard(int &cardn){
     ++cardn;
@@ -45,10 +51,6 @@ void Player::SetDefault(){
 
 string Player::ShowName(){
     return name;
-}
-
-void Player::AssignName(string inputname){
-    name = inputname; 
 }
 
 void Player::ShowScore(){
@@ -92,7 +94,7 @@ bool Player::CheckScoreOver21(){
     }
 }
 
-void Player::BetP(){
+void Player::PlayerBet(){
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(h,14);
     cout << "----888-------------------------888----\n";
@@ -103,43 +105,43 @@ void Player::BetP(){
     SetConsoleTextAttribute(h,14);
     cout << "Put your money (You have left ";
     SetConsoleTextAttribute(h,5);
-    cout << moneyp << "$";
+    cout << money << "$";
     SetConsoleTextAttribute(h,14);
     cout << ") : ";
 
     string text;
     getline(cin,text);
-    betp = atof(text.c_str());
-    if(betp > 0 && betp <= moneyp && betp - (int) betp == 0 && betp <= 10){
-        moneyp = moneyp-betp;
+    bet = atof(text.c_str());
+    if(bet > 0 && bet <= money && bet - (int) bet == 0 && bet <= 10){
+        money = money-bet;
         SetConsoleTextAttribute(h,10);
         cout << "\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n";
         cout << "You bet ";
         SetConsoleTextAttribute(h,3);
-        cout << betp << "$ ";
+        cout << bet << "$ ";
         SetConsoleTextAttribute(h,10);
         cout << "(You have left now ";
         SetConsoleTextAttribute(h,4);
-        cout << moneyp << "$";
+        cout << money << "$";
         SetConsoleTextAttribute(h,10);
         cout << ")\n\n";
         cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n";
         SetConsoleTextAttribute(h,7);
         break;
     }
-    else if(betp > 10){
+    else if(bet > 10){
         SetConsoleTextAttribute(h,4);
         cout << "\n------------------------------------\n";
         cout << "$$$ Please Bet between [1-10]!!! $$$\n";
         cout << "--------------------------------------\n\n";
     }
-    else if(betp > moneyp){
+    else if(bet > money){
         SetConsoleTextAttribute(h,4);
         cout << "\n--------------------------------------------------------------------------------\n";
         cout << "$$$ Are you serious? You put money more than you have! Try again the poor!!! $$$\n";
         cout << "--------------------------------------------------------------------------------\n\n";
     }
-    else if(betp - (int) betp != 0) {
+    else if(bet - (int) bet != 0) {
         SetConsoleTextAttribute(h,4);
         cout << "\n---------------------------------------------------------------------------------\n";
         cout << "$$$ I don't want some kind of pocket change...Try again with integer numbers. $$$\n";

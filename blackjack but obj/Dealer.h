@@ -8,7 +8,9 @@ class Dealer{
     private:
         vector<int> onhand;
     public:
-        int score; 
+        int score;
+        int money;
+        int bet;
         bool firstturn = true;
         bool survival = true;
         
@@ -23,8 +25,14 @@ class Dealer{
         void SumScore(int []);
         void DealerThinking();
         void SetDefault();
+        void DealerBet();
         string ShowName();
+        Dealer();
 };
+
+Dealer::Dealer(){
+    money = 2000;
+}
 
 int Dealer::GiveCard(int &cardn){
     ++cardn;
@@ -129,4 +137,26 @@ void Dealer::GamePlay(string CardId[], int Cardpoint[], int &cardn){
         }
     }
     
+}
+
+void Dealer::DealerBet(){
+    HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+    srand(time(0));
+    SetConsoleTextAttribute(h,1);
+    cout << "------------------------------------\n";
+    bet = (money/10)*(rand()%9 + 1);
+    money = money - bet;
+    SetConsoleTextAttribute(h,2);
+    cout << "Dealer bets ";
+    SetConsoleTextAttribute(h,13);
+    cout << bet << "$ ";
+    SetConsoleTextAttribute(h,2);
+    cout << "(left ";
+    SetConsoleTextAttribute(h,4);
+    cout << money <<"$";
+    SetConsoleTextAttribute(h,2);
+    cout << ")\n";
+    SetConsoleTextAttribute(h,1);
+    cout << "------------------------------------";
+    SetConsoleTextAttribute(h,7);
 }

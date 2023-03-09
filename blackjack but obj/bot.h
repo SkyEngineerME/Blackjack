@@ -11,6 +11,8 @@ class Bot{
     public:
         int score; // ตอนแรกเอาไว้ใน private แต่คิดว่าคงไม่จำเป็น เพราะเกมเราคงไม่มีใครมาแฮก555 แล้ว "game.h" จะมา access ค่าง่ายขึ้นด้วย
         bool survival = true;
+        int money;
+        int bet;
         
         int GiveCard(int&);
         bool Probability();
@@ -24,8 +26,14 @@ class Bot{
         void SumScore(int []);
         void BotThinking();
         void SetDefault();
+        void BotBet();        
         string ShowName();
+        Bot();
 };
+
+Bot::Bot(){
+    money = 2000;
+}
 
 int Bot::GiveCard(int &cardn){
     ++cardn;
@@ -123,4 +131,22 @@ void Bot::GamePlay(string CardId[], int Cardpoint[], int &cardn){
             }
         }
     }
+}
+
+void Bot::BotBet(){
+    HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+    srand(time(0));
+    SetConsoleTextAttribute(h,13);
+    bet = (money/10)*(rand()%9 + 1);
+    money = money - bet;
+    SetConsoleTextAttribute(h,13);
+    cout << "Bot No." << number << " bets ";
+    SetConsoleTextAttribute(h,3);
+    cout << bet << "$ ";
+    SetConsoleTextAttribute(h,13);
+    cout << "(left ";
+    SetConsoleTextAttribute(h,4);
+    cout << money <<"$";
+    SetConsoleTextAttribute(h,13);
+    cout << ")\n";
 }

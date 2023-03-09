@@ -34,20 +34,15 @@ class Game{
         void Winner(Player*, Bot*, Dealer*);
         void DealerShowCard(Dealer*);
         void DealerShowScore(Dealer*);
+        void ResultScoreboard(Player*, Bot*);
 };
 
 void Game::Start(int numbot,int round){
-
+    HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     int counter = 0;
     Player *people = new Player;
     Bot *ai = new Bot[numbot];
     Dealer *dealer = new Dealer;
-    bot = numbot;
-    
-    string name;
-    cout << "::: Type your name ::: >> ";
-    getline(cin,name);
-    people->AssignName(name);
 
     for (int i=0; i<numbot; i++){
         ai[i].AssignNumberbot(i+1);
@@ -55,6 +50,31 @@ void Game::Start(int numbot,int round){
 
     while(tryagain){
         system("cls");
+        bot = numbot;
+
+        people->PlayerBet();
+        SetConsoleTextAttribute(h,13);
+        cout << "------------------------------------\n";
+        for (int i=0; i<numbot; i++) ai[i].BotBet();
+        cout << "------------------------------------\n";
+        dealer->DealerBet();
+        SetConsoleTextAttribute(h,7);
+
+        cout << "\nPressed [Y] to continue .. " << '\r';
+            int key = _getch();
+            if(key == 121 || key == 89){
+                system("cls");
+            }
+            else{
+                while(true){
+                    cout << "Invalid Command !! Please Pressed [Y] to continue .. " << '\r';
+                    int key = _getch();
+                    if(key == 121 || key == 89){
+                        system("cls");
+                        break;
+                    }
+                }
+            }
 
         ShuffleCard();
         cout << "\n----------------------";
@@ -118,6 +138,7 @@ void Game::Start(int numbot,int round){
         
         counter++;
         if(counter >= round){
+            ResultScoreboard(people,ai);
             cout << "\nGo to HOMEPAGE [Y] .. " << '\r';
             int key = _getch();
             if(key == 121 || key == 89){
@@ -280,4 +301,33 @@ void Game::DealerShowCard(Dealer *dealer){
 void Game::DealerShowScore(Dealer *dealer){
     if(dealer->firstturn) dealer->ShowScore(Cardpoint);
     else dealer->ShowScore();
+}
+
+void Game::ResultScoreboard(Player* p, Bot* b){ // ยังไม่เสร็จนะ TT
+    cout << "\n&&&&&&&&& RESULT THIS GAME &&&&&&&&&\n";
+    string name;
+    int score[4] = {};
+    score[0] = p->score;
+    for(int k=0; k<bot; k++){
+        score[k+1] = b[k].score;
+    }
+    int max=score[0],loc=0;
+    for(int i = 0;i<bot+1;i++){
+        if(max<score[i]){
+            max = score[i];
+            loc = i;
+        }
+    }
+    for(int i=0;i<bot+1;i++){
+        if(score[i]==max){
+            if(score[i] == p->score) name = p->ShowName();
+            for (int j=0; j<bot; j++){
+                if(score[i] == b[j].score) name = b[j].ShowName();
+            }
+            cout << name <<" win!!!"<<endl;
+            }
+    }
+
+    cout << "\n\nMy Current Money = " << p->money;
+    cout << "\n\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n";
 }
