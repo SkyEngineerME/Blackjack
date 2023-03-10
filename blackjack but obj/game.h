@@ -37,6 +37,7 @@ class Game{
         void DealerShowScore(Dealer*);
         void ResultGame(Player*, Bot*);
         void WriteScoreboard(Player*);
+        void Checkmoney(int &,int &,int);
 };
 
 void Game::Start(int numbot,int round){
@@ -185,7 +186,19 @@ void Game::Start(int numbot,int round){
     delete people;
     delete dealer;
 }
+    void Game::Checkmoney(int &moneyPlayer,int &Betplayer,int condition){
+    if(condition == 0){
+        cout << "Got" << endl;
+        moneyPlayer += Betplayer*2;
+    }else if(condition == 1){
+        cout << "Draw" << endl;
+        moneyPlayer += Betplayer;
+    }
+    else{
+        cout << "Lose" << endl;
+    }
 
+    }
 void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
     cout << "\n------ SCREEN -------\n";
     
@@ -201,6 +214,9 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
         }else{
             cout << "* " << people->ShowName() << " LOST\n";
         }
+        Checkmoney(people->bet,people->bet,people->cond);
+
+
 
         for (int count = 0; count<bot; count++){
             if(ai[count].score == 21){
@@ -217,32 +233,43 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
     
     if(dealer->survival && !blackjack_flag){
         // กรณีที่ dealer ไม่ lost
+        people->cond = 3;
         if (people->survival)
         {
             if(people->score > dealer->score){
                 cout << "* " << people->ShowName() << " WIN\n";
+                people->cond = 0;
             }else if(people->score == dealer->score){
                 cout << "* " << people->ShowName() << " DRAW\n";
+                people->cond = 1;
             }else{
                 cout << "* " << people->ShowName() << " LOST\n";
+                people->cond = 2;
             }
         }else{
             cout << "* " << people->ShowName() << " LOST\n";
+            people->cond = 2;
         }
+        Checkmoney(people->money,people->bet,people->cond);
         
         
         for (int count = 0; count<bot; count++){
             if(ai[count].survival){
                 if(ai[count].score > dealer->score){
                     cout << "* " << ai[count].ShowName() << " WIN\n";
+                    ai[count].cond = 0;
                 }else if(ai[count].score == dealer->score){
                     cout << "* " << ai[count].ShowName() << " DRAW\n";
+                    ai[count].cond = 1;
                 }else{
                     cout << "* " << ai[count].ShowName() << " LOST\n";
+                    ai[count].cond = 2;
                 }
             }else{
                 cout << "* " << ai[count].ShowName() << " LOST\n";
+                ai[count].cond = 2;
             }
+            Checkmoney(ai[count].money,ai[count].bet,ai[count].cond);
         }
     }else if (!dealer->survival && !blackjack_flag){
         // ถ้า dealer lost

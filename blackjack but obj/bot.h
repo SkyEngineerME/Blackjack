@@ -13,6 +13,7 @@ class Bot{
         bool survival = true;
         int money;
         int bet;
+    int cond;
         
         int GiveCard(int&);
         bool Probability();

@@ -15,6 +15,7 @@ class Player{
         int money;
         int bet;
         int score;
+    int cond;
         bool survival = true;
         bool blackjack = false;
         int GiveCard(int&);
