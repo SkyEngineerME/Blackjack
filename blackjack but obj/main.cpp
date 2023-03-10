@@ -1,5 +1,4 @@
 #include "game.h"
-#include <fstream>
 #include <cstdlib>
 #include <iomanip>
 
@@ -56,22 +55,27 @@ int main(){
 }
 
 bool menu(){
-    system("cls");
-    cout << "-------------  BLACKJACK  ---------------\n";
-    cout << "|                                       |\n";
-    cout << "|             [N] NewGame               |\n";
-    cout << "|             [E] Exit                  |\n";
-    cout << "|                                       |\n";
-    cout << "-----------------------------------------\n";
-    ShowScoreBoard();
     while (true){
-        int key = _getch();
-        if (key == 110 || key == 78){
-            return true;
-        }else if (key == 211 || key == 174 || key == 101 || key == 69){
-            return false;
-        }else{
-            cout << "Invalid Command !! Please Pressed [Y] or [E] to continue .. " << '\r';
+        system("cls");
+        cout << "-------------  BLACKJACK  ---------------\n";
+        cout << "|                                       |\n";
+        cout << "|             [N] NewGame               |\n";
+        cout << "|             [S] Scoreboard            |\n";
+        cout << "|             [E] Exit                  |\n";
+        cout << "|                                       |\n";
+        cout << "-----------------------------------------\n";
+        while (true){
+            int key = _getch();
+            if (key == 110 || key == 78){
+                return true;
+            }else if (key == 211 || key == 174 || key == 101 || key == 69){
+                return false;
+            }else if (key == 115 || key == 83 || key == 203 || key == 166){
+                ShowScoreBoard();
+                break;
+            }else{
+                cout << "Invalid Command !! Please Pressed [Y] or [E] to continue .. " << '\r';
+            }
         }
     }
 }
@@ -102,12 +106,24 @@ void ShowScoreBoard(){ // concept support by ChatGPT
         money[i] = sorteddata[i].first;
         name[i] = sorteddata[i].second;
     }
-
-    cout << "********  SCOREBOARD  ********\n";
-    cout << "NAME" << "\t\t\t" << "MONEY" << '\n'; 
+    system("cls");
+    cout << "**************  SCOREBOARD  *************\n";
+    cout << "| NAME" << "\t\t\t" << "  MONEY" << "         |\n"; 
     for(unsigned int i=0; i<money.size(); i++){
-        cout << "[" << i+1 << "] " << name[i] << setw(24-name[i].length()) << money[i] << "$\n"; 
+        cout << "| ";
+        cout << "[" << i+1 << "] " << name[i] << setw(24-name[i].length()) << money[i] << "$"; 
+        cout << "         |\n";
     }
-    cout << "******************************\n";
-
+    cout << "*****************************************\n";
+    cout << "\nGo to HOMEPAGE [Y] .. " << '\r';
+    int key = _getch();
+    if(!(key == 121 || key == 89)){
+        while(true){
+            cout << "Invalid Command !! Please Pressed [Y] to continue .. " << '\r';
+            int key = _getch();
+            if(key == 121 || key == 89){
+                break;
+            }
+        }
+    }
 }

@@ -3,6 +3,7 @@
 #include <ctime>
 #include <cstring>
 #include <cctype>
+#include <fstream>
 #include "player.h"
 #include "bot.h"
 #include "Dealer.h"
@@ -313,12 +314,12 @@ void Game::DealerShowScore(Dealer *dealer){
 }
 
 void Game::ResultGame(Player* p, Bot* b){ // ยังไม่เสร็จนะ TT
-    cout << "\n&&&&&&&&& RESULT THIS GAME &&&&&&&&&\n";
+    cout << "\n&&&&&&&&& RESULT THIS GAME &&&&&&&&&\n\n";
     string name;
     vector<int> score;
-    score.push_back(p->score);
+    score.push_back(p->money);
     for(int k=0; k<bot; k++){
-        score.push_back(b[k].score);
+        score.push_back(b[k].money);
     }
 
     int max=score[0],loc=0;
@@ -332,15 +333,17 @@ void Game::ResultGame(Player* p, Bot* b){ // ยังไม่เสร็จ�
         if(score[i]==max){
             if(i == 0) name = p->ShowName();
             else name = b[i].ShowName();
-            cout << "      " << name <<" win!!!"<<endl;
+            cout << "            " << name << " WIN!!!" << endl;
+            cout << "            " << "MONEY : " << max << endl;
         }
     }
 
-    cout << "\n\nMy Current Money = " << p->money;
+    cout << "\n\n      My Current Money = " << p->money;
     cout << "\n\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n";
 }
 
 void Game::WriteScoreboard(Player *p){
     ofstream output("scoreboard.txt", ios::app);
-    output << p->ShowName() << ',' << p->money;    
+    output << '\n' << p->ShowName() << ',' << p->money; 
+    output.close();  
 }
