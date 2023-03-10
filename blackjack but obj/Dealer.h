@@ -9,6 +9,7 @@ class Dealer{
         vector<int> onhand;
     public:
         int score;
+        int scoreft;
         int money;
         int bet;
         bool firstturn = true;
@@ -18,7 +19,6 @@ class Dealer{
         bool Probability();
         bool CheckScoreOver21();
         void ShowScore();
-        void ShowScore(int []);
         void ShowCard(string []);
         void GamePlay(string [], int [], int&);
         void ReceiveCard(int);
@@ -41,6 +41,7 @@ int Dealer::GiveCard(int &cardn){
 void Dealer::SetDefault(){
     onhand.clear();
     score = 0;
+    scoreft = 0;
     firstturn = true;
     survival = true;
 }
@@ -50,12 +51,11 @@ string Dealer::ShowName(){
 }
 
 void Dealer::ShowScore(){
-    cout << "Dealer's Score is " << score << "\n\n";
-}
-
-void Dealer::ShowScore(int Cardpoint[]){ // Overload Func First turn
-    cout << "Dealer's Score is " << score - Cardpoint[onhand[0]] << '\n';
-    firstturn = false;
+    if(firstturn){
+        cout << "Dealer's Score is " << scoreft << "\n";
+        firstturn = false;
+    }
+    else cout << "Dealer's Score is " << score << "\n\n";
 }
 
 void Dealer::ShowCard(string CardId[]){
@@ -87,6 +87,7 @@ void Dealer::SumScore(int Cardpoint[]){
         if (21-sum >= 10) sum += 10;
     }
     score = sum;
+    scoreft = score - Cardpoint[onhand[0]];
 }
 
 bool Dealer::Probability(){

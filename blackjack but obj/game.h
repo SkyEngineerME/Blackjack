@@ -337,8 +337,7 @@ void Game::DealerShowCard(Dealer *dealer){
 }
 
 void Game::DealerShowScore(Dealer *dealer){
-    if(dealer->firstturn) dealer->ShowScore(Cardpoint);
-    else dealer->ShowScore();
+    dealer->ShowScore();
 }
 
 void Game::ResultGame(Player* p, Bot* b){ // ยังไม่เสร็จนะ TT

@@ -2,8 +2,6 @@ Premer,3000
 Sky,1000
 A,600
 B,300
-SiaO,1990
+SiaO,100000000
 Prem,1990
 Natan,1950
-teeza,1950
-natan,1950

@@ -4,6 +4,7 @@
 
 bool menu();
 void ShowScoreBoard();
+string thousandSeparator(int);
 
 bool compare(const pair<int, string>& a, const pair<int, string>& b) {
     return a.first > b.first;
@@ -111,7 +112,7 @@ void ShowScoreBoard(){ // concept support by ChatGPT
     cout << "| NAME" << "\t\t\t" << "  MONEY" << "         |\n"; 
     for(unsigned int i=0; i<money.size(); i++){
         cout << "| ";
-        cout << "[" << i+1 << "] " << name[i] << setw(24-name[i].length()) << money[i] << "$"; 
+        cout << "[" << i+1 << "] " << name[i] << setw(24-name[i].length()) << thousandSeparator(money[i]) << "$"; 
         cout << "         |\n";
     }
     cout << "*****************************************\n";
@@ -126,4 +127,42 @@ void ShowScoreBoard(){ // concept support by ChatGPT
             }
         }
     }
+}
+
+string thousandSeparator(int n)
+/* REF. https://www.geeksforgeeks.org/program-to-format-a-number-with-thousands-separator-in-c-cpp/ */
+{
+    string ans = "";
+    string num = to_string(n);
+  
+    // Initialise count
+    int count = 0;
+  
+    // Traverse the string in reverse
+    for (int i = num.size() - 1;
+         i >= 0; i--) {
+        count++;
+        ans.push_back(num[i]);
+  
+        // If three characters
+        // are traversed
+        if (count == 3) {
+            ans.push_back(',');
+            count = 0;
+        }
+    }
+  
+    // Reverse the string to get
+    // the desired output
+    reverse(ans.begin(), ans.end());
+  
+    // If the given string is
+    // less than 1000
+    if (ans.size() % 4 == 0) {
+  
+        // Remove ','
+        ans.erase(ans.begin());
+    }
+  
+    return ans;
 }
