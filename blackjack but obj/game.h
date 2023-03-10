@@ -52,9 +52,9 @@ void Game::Start(int numbot,int round){
 
     while(tryagain){
         system("cls");
+        srand(time(0));
         bot = numbot;
 
-        srand(time(0));
         people->PlayerBet();
         SetConsoleTextAttribute(h,13);
         cout << "------------------------------------\n";
