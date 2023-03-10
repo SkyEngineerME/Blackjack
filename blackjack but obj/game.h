@@ -341,31 +341,6 @@ void Game::ResultGame(Player* p, Bot* b){ // ยังไม่เสร็จ�
 }
 
 void Game::WriteScoreboard(Player *p){
-    ifstream input("scoreboard.txt");
-    string textline;
-    vector<string> name;
-    vector<int> money;
-    while (getline(input,textline)){
-        int cash;
-        char ntemp[100];
-        char format[] = "%[^,],%d";
-        sscanf(textline.c_str(), format, ntemp, &cash);
-
-        string checknamefile = ntemp;
-        string checknameinput = p->ShowName();
-        for (int x=0; x<checknamefile.size(); x++) putchar(toupper(checknamefile[x]));
-        for (int x=0; x<checknameinput.size(); x++) putchar(toupper(checknameinput[x]));
-    
-        if(checknamefile == checknameinput){
-            name.push_back(ntemp);
-            if(cash > p->money){
-                money.push_back(cash);
-            }else{
-                money.push_back(p->money);
-            }
-        }else{
-            name.push_back(ntemp);
-            money.push_back(cash);
-        }
-    }
+    ofstream output("scoreboard.txt", ios::app);
+    output << p->ShowName() << ',' << p->money;    
 }
