@@ -34,7 +34,8 @@ class Game{
         void Winner(Player*, Bot*, Dealer*);
         void DealerShowCard(Dealer*);
         void DealerShowScore(Dealer*);
-        void ResultScoreboard(Player*, Bot*);
+        void ResultGame(Player*, Bot*);
+        void WriteScoreboard(Player*);
 };
 
 void Game::Start(int numbot,int round){
@@ -57,7 +58,6 @@ void Game::Start(int numbot,int round){
         cout << "------------------------------------\n";
         for (int i=0; i<numbot; i++) ai[i].BotBet();
         cout << "------------------------------------\n";
-        dealer->DealerBet();
         SetConsoleTextAttribute(h,7);
 
         cout << "\nPressed [Y] to continue .. " << '\r';
@@ -138,7 +138,8 @@ void Game::Start(int numbot,int round){
         
         counter++;
         if(counter >= round){
-            ResultScoreboard(people,ai);
+            ResultGame(people,ai);
+            WriteScoreboard(people);
             cout << "\nGo to HOMEPAGE [Y] .. " << '\r';
             int key = _getch();
             if(key == 121 || key == 89){
@@ -188,8 +189,13 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
     
     if(blackjack_flag){
         // ถ้ามีใคร blackjack ในตาแรก คนนั้นชนะ
+        // ที่เหลือ ถ้าคะแนนมากกว่า dealer ก็ชนะเช่นกัน
         if(people->score == 21){
             cout << "* " << people->ShowName() << " WIN\n";
+        }else if(people->score > dealer->score){
+            cout << "* " << people->ShowName() << " WIN\n";
+        }else if(people->score == dealer->score){
+            cout << "* " << people->ShowName() << " DRAW\n";
         }else{
             cout << "* " << people->ShowName() << " LOST\n";
         }
@@ -197,15 +203,18 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
         for (int count = 0; count<bot; count++){
             if(ai[count].score == 21){
                 cout << "* " << ai[count].ShowName() << " WIN\n";
+            }else if(ai[count].score > dealer->score){
+                cout << "* " << ai[count].ShowName() << " WIN\n";
+            }else if(ai[count].score == dealer->score){
+                cout << "* " << ai[count].ShowName() << " DRAW\n";
             }else{
                 cout << "* " << ai[count].ShowName() << " LOST\n";
             }
-        
         }
     }
     
     if(dealer->survival && !blackjack_flag){
-        // ถ้า dealer ไม่แพ้
+        // กรณีที่ dealer ไม่ lost
         if (people->survival)
         {
             if(people->score > dealer->score){
@@ -234,7 +243,7 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
             }
         }
     }else if (!dealer->survival && !blackjack_flag){
-        // ถ้า dealer แพ้
+        // ถ้า dealer lost
         // แล้วคะแนนผู้เล่นทุกคนน้อยกว่า 21 คือชนะไปเลย
         if (people->survival)
         {
@@ -303,31 +312,60 @@ void Game::DealerShowScore(Dealer *dealer){
     else dealer->ShowScore();
 }
 
-void Game::ResultScoreboard(Player* p, Bot* b){ // ยังไม่เสร็จนะ TT
+void Game::ResultGame(Player* p, Bot* b){ // ยังไม่เสร็จนะ TT
     cout << "\n&&&&&&&&& RESULT THIS GAME &&&&&&&&&\n";
     string name;
-    int score[4] = {};
-    score[0] = p->score;
+    vector<int> score;
+    score.push_back(p->score);
     for(int k=0; k<bot; k++){
-        score[k+1] = b[k].score;
+        score.push_back(b[k].score);
     }
+
     int max=score[0],loc=0;
-    for(int i = 0;i<bot+1;i++){
+    for(unsigned int i=0; i<score.size(); i++){
         if(max<score[i]){
             max = score[i];
             loc = i;
         }
     }
-    for(int i=0;i<bot+1;i++){
+    for(unsigned int i=0; i<score.size(); i++){
         if(score[i]==max){
-            if(score[i] == p->score) name = p->ShowName();
-            for (int j=0; j<bot; j++){
-                if(score[i] == b[j].score) name = b[j].ShowName();
-            }
-            cout << name <<" win!!!"<<endl;
-            }
+            if(i == 0) name = p->ShowName();
+            else name = b[i].ShowName();
+            cout << "      " << name <<" win!!!"<<endl;
+        }
     }
 
     cout << "\n\nMy Current Money = " << p->money;
     cout << "\n\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n";
+}
+
+void Game::WriteScoreboard(Player *p){
+    ifstream input("scoreboard.txt");
+    string textline;
+    vector<string> name;
+    vector<int> money;
+    while (getline(input,textline)){
+        int cash;
+        char ntemp[100];
+        char format[] = "%[^,],%d";
+        sscanf(textline.c_str(), format, ntemp, &cash);
+
+        string checknamefile = ntemp;
+        string checknameinput = p->ShowName();
+        for (int x=0; x<checknamefile.size(); x++) putchar(toupper(checknamefile[x]));
+        for (int x=0; x<checknameinput.size(); x++) putchar(toupper(checknameinput[x]));
+    
+        if(checknamefile == checknameinput){
+            name.push_back(ntemp);
+            if(cash > p->money){
+                money.push_back(cash);
+            }else{
+                money.push_back(p->money);
+            }
+        }else{
+            name.push_back(ntemp);
+            money.push_back(cash);
+        }
+    }
 }
