@@ -214,7 +214,7 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
         }else{
             cout << "* " << people->ShowName() << " LOST\n";
         }
-        Checkmoney(people.betmoney,people.bet,people.cond)
+        Checkmoney(people->bet,people->bet,people->cond);
 
 
 
@@ -238,19 +238,19 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
         {
             if(people->score > dealer->score){
                 cout << "* " << people->ShowName() << " WIN\n";
-                people.cond = 0;
+                people->cond = 0;
             }else if(people->score == dealer->score){
                 cout << "* " << people->ShowName() << " DRAW\n";
-                people.cond = 1;
+                people->cond = 1;
             }else{
                 cout << "* " << people->ShowName() << " LOST\n";
-                people.cond = 2;
+                people->cond = 2;
             }
         }else{
             cout << "* " << people->ShowName() << " LOST\n";
-            people.cond = 2;
+            people->cond = 2;
         }
-        Checkmoney(people.money,people.bet,people.cond);
+        Checkmoney(people->money,people->bet,people->cond);
         
         
         for (int count = 0; count<bot; count++){
