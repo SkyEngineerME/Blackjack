@@ -37,9 +37,9 @@ void Checkmoney(int &moneyPlayer,int &Betplayer,int condition,bool &survive){
         cout << "Draw" << endl;
         moneyPlayer += Betplayer;
     }
-    else{
+    else if(condition == 2{
         cout << "Lose" << endl;
-    }
+    }else;
     if(moneyPlayer <= 0){
         cout << "Lose Game bye" << endl;
         survive = false;
