@@ -142,6 +142,7 @@ void Bot::BotBet(){
         cout << money ;
         SetConsoleTextAttribute(h,13);
         cout << " ] ";
+        bet = (rand()%9 + 1);
         while(bet > money){
         bet = (rand()%9 + 1);
         }
