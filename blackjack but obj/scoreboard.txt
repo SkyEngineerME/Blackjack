@@ -5,3 +5,5 @@ B,300
 SiaO,1990
 Prem,1990
 Natan,1950
+teeza,1950
+natan,1950
