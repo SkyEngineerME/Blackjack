@@ -136,16 +136,26 @@ void Bot::GamePlay(string CardId[], int Cardpoint[], int &cardn){
 void Bot::BotBet(){
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(h,13);
-    bet = (money/10)*(rand()%9 + 1);
-    money = money - bet;
-    SetConsoleTextAttribute(h,13);
-    cout << "Bot No." << number << " bets ";
-    SetConsoleTextAttribute(h,3);
-    cout << bet << "$ ";
-    SetConsoleTextAttribute(h,13);
-    cout << "(left ";
-    SetConsoleTextAttribute(h,4);
-    cout << money <<"$";
-    SetConsoleTextAttribute(h,13);
-    cout << ")\n";
+    cout << "------------------------------------\n";
+        cout << "[ ";
+        SetConsoleTextAttribute(h,3);
+        cout << money ;
+        SetConsoleTextAttribute(h,13);
+        cout << " ] ";
+        while(bet > money){
+        bet = (rand()%9 + 1);
+        }
+        money -= bet;
+        SetConsoleTextAttribute(h,13);
+        cout << "Bot No." << " bets ";
+        SetConsoleTextAttribute(h,3);
+        cout << bet<< "$ ";
+        SetConsoleTextAttribute(h,13);
+        cout << "(left ";
+        SetConsoleTextAttribute(h,4);
+        cout << money <<"$";
+        SetConsoleTextAttribute(h,13);
+        cout << ")\n";
+    cout << "------------------------------------\n";
+    SetConsoleTextAttribute(h,7);
 }
