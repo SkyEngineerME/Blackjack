@@ -54,6 +54,7 @@ void Game::Start(int numbot,int round){
         system("cls");
         bot = numbot;
 
+        srand(time(0));
         people->PlayerBet();
         SetConsoleTextAttribute(h,13);
         cout << "------------------------------------\n";

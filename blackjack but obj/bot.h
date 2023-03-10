@@ -32,7 +32,7 @@ class Bot{
 };
 
 Bot::Bot(){
-    money = 2000;
+    money = 1000;
 }
 
 int Bot::GiveCard(int &cardn){
@@ -135,7 +135,6 @@ void Bot::GamePlay(string CardId[], int Cardpoint[], int &cardn){
 
 void Bot::BotBet(){
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-    srand(time(0));
     SetConsoleTextAttribute(h,13);
     bet = (money/10)*(rand()%9 + 1);
     money = money - bet;
