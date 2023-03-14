@@ -188,14 +188,11 @@ void Game::Start(int numbot,int round){
 }
     void Game::Checkmoney(int &moneyPlayer,int &Betplayer,int condition){
     if(condition == 0){
-        cout << "Got" << endl;
+        
         moneyPlayer += Betplayer*2;
     }else if(condition == 1){
-        cout << "Draw" << endl;
+        
         moneyPlayer += Betplayer;
-    }
-    else{
-        cout << "Lose" << endl;
     }
 
     }
