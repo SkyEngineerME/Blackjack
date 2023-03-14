@@ -53,7 +53,6 @@ int main(){
         selectplay = menu();
     }
 
-
 }
 
 bool menu(){
