@@ -120,7 +120,7 @@ void Dealer::GamePlay(string CardId[], int Cardpoint[], int &cardn){
     cout << "\n--------   Dealer's turn   --------";
     ShowCard(CardId);
     ShowScore();
-    while(true){
+    while(true && score!=21){
         DealerThinking();
         if(Probability()){
             cout << "\nDealer Selected >> Hit\n\n";

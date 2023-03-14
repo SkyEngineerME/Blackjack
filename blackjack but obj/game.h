@@ -113,10 +113,6 @@ void Game::Start(int numbot,int round){
             cout << "\n>>>>>>>>>>>>>> "<< people->ShowName() <<" Blackjack!! <<<<<<<<<<<<<\n";
             blackjack_flag = true;
         }
-        if(dealer->score == 21){
-            cout << "\n>>>>>>>>>>>>>> "<< dealer->ShowName() <<" Blackjack!! <<<<<<<<<<<<<\n";
-            blackjack_flag = true;
-        }
         for (int i=0; i<numbot; i++){
             if(ai[i].score == 21){
                 cout << "\n>>>>>>>>>>>>>> "<< ai[i].ShowName() <<" Blackjack!! <<<<<<<<<<<<<\n";
@@ -133,6 +129,11 @@ void Game::Start(int numbot,int round){
             }
 
             dealer->GamePlay(CardId, Cardpoint, cardn);
+
+            if(dealer->score == 21){
+                cout << ">>>>>>>>>>>>>> "<< dealer->ShowName() <<" Blackjack!! <<<<<<<<<<<<<\n";
+                blackjack_flag = true;
+            }
         }
 
         //--------------------------------- โชว์คนแพ้ชนะ
@@ -341,7 +342,6 @@ void Game::DealerShowCard(Dealer *dealer){
 
 void Game::DealerShowScore(Dealer *&dealer){
     dealer->ShowScore();
-    cout << "dealer->score : " << dealer->score << " dealer->score : " << dealer->scoreft << '\n'; //debug1 
 }
 
 void Game::ResultGame(Player* p, Bot* b){ // ยังไม่เสร็จนะ TT
