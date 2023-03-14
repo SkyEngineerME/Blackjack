@@ -233,6 +233,7 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
                 cout << "* " << ai[count].ShowName() << " LOST\n";
                 ai[count].cond = 2;
             }
+            Checkmoney(ai[count].money,ai[count].bet,ai[count].cond);
         }
     }
     
