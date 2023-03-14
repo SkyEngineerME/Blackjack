@@ -111,11 +111,13 @@ void Game::Start(int numbot,int round){
         //--------------------------------- เช็คหาคนที่ blackjack ในตาแรกเท่านั้น
         if(people->score == 21){
             cout << "\n>>>>>>>>>>>>>> "<< people->ShowName() <<" Blackjack!! <<<<<<<<<<<<<\n";
+            cout << "\n::: Dealer Score -> " << dealer->score << "\n";
             blackjack_flag = true;
         }
         for (int i=0; i<numbot; i++){
             if(ai[i].score == 21){
                 cout << "\n>>>>>>>>>>>>>> "<< ai[i].ShowName() <<" Blackjack!! <<<<<<<<<<<<<\n";
+                cout << "\n::: Dealer Score -> " << dealer->score << "\n";
                 blackjack_flag = true;
             }
         }
@@ -132,6 +134,7 @@ void Game::Start(int numbot,int round){
 
             if(dealer->score == 21){
                 cout << ">>>>>>>>>>>>>> "<< dealer->ShowName() <<" Blackjack!! <<<<<<<<<<<<<\n";
+                cout << "\n::: Dealer Score -> " << dealer->score << "\n";
                 blackjack_flag = true;
             }
         }
@@ -200,15 +203,20 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
     if(blackjack_flag){
         // ถ้ามีใคร blackjack ในตาแรก คนนั้นชนะ
         // ที่เหลือ ถ้าคะแนนมากกว่า dealer ก็ชนะเช่นกัน
-        if(people->score == 21){
-            cout << "* " << people->ShowName() << " WIN\n";
-            people->cond = 0;
-        }else if(people->score > dealer->score){
-            cout << "* " << people->ShowName() << " WIN\n";
-            people->cond = 0;
-        }else if(people->score == dealer->score){
-            cout << "* " << people->ShowName() << " DRAW\n";
-            people->cond = 1;
+        if(people->survival){
+            if(people->score == 21){
+                cout << "* " << people->ShowName() << " WIN\n";
+                people->cond = 0;
+            }else if(people->score > dealer->score){
+                cout << "* " << people->ShowName() << " WIN\n";
+                people->cond = 0;
+            }else if(people->score == dealer->score){
+                cout << "* " << people->ShowName() << " DRAW\n";
+                people->cond = 1;
+            }else{
+                cout << "* " << people->ShowName() << " LOST\n";
+                people->cond = 2;
+            }
         }else{
             cout << "* " << people->ShowName() << " LOST\n";
             people->cond = 2;
@@ -218,15 +226,20 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
 
 
         for (int count = 0; count<bot; count++){
-            if(ai[count].score == 21){
-                cout << "* " << ai[count].ShowName() << " WIN\n";
-                ai[count].cond = 0;
-            }else if(ai[count].score > dealer->score){
-                cout << "* " << ai[count].ShowName() << " WIN\n";
-                ai[count].cond = 0;
-            }else if(ai[count].score == dealer->score){
-                cout << "* " << ai[count].ShowName() << " DRAW\n";
-                ai[count].cond = 1;
+            if(ai[count].survival){
+                if(ai[count].score == 21){
+                    cout << "* " << ai[count].ShowName() << " WIN\n";
+                    ai[count].cond = 0;
+                }else if(ai[count].score > dealer->score){
+                    cout << "* " << ai[count].ShowName() << " WIN\n";
+                    ai[count].cond = 0;
+                }else if(ai[count].score == dealer->score){
+                    cout << "* " << ai[count].ShowName() << " DRAW\n";
+                    ai[count].cond = 1;
+                }else{
+                    cout << "* " << ai[count].ShowName() << " LOST\n";
+                    ai[count].cond = 2;
+                }
             }else{
                 cout << "* " << ai[count].ShowName() << " LOST\n";
                 ai[count].cond = 2;
@@ -256,7 +269,6 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
         }
         Checkmoney(people->money,people->bet,people->cond);
         
-        
         for (int count = 0; count<bot; count++){
             if(ai[count].survival){
                 if(ai[count].score > dealer->score){
@@ -275,6 +287,7 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
             }
             Checkmoney(ai[count].money,ai[count].bet,ai[count].cond);
         }
+
     }else if (!dealer->survival && !blackjack_flag){
         // ถ้า dealer lost
         // แล้วคะแนนผู้เล่นทุกคนน้อยกว่า 21 คือชนะไปเลย
