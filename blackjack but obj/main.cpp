@@ -16,7 +16,7 @@ int main(){
 
     while(selectplay){
         srand(time(0));
-        Game *obj = new Game;
+        Game obj;
         string input;
         int numbot;//numplayer
         int round;
@@ -53,8 +53,7 @@ int main(){
             }
         }
         
-        obj->Start(numbot,round);
-        delete obj;
+        obj.Start(numbot,round);
         selectplay = menu();
     }
 
