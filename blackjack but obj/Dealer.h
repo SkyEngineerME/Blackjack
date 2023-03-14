@@ -47,19 +47,19 @@ void Dealer::SetDefault(){
 }
 
 string Dealer::ShowName(){
-    return "Dealer";
+    return "Dealer Karn";
 }
 
 void Dealer::ShowScore(){
     if(firstturn){
-        cout << "Dealer's Score is " << scoreft << "\n";
+        cout << "Dealer Karn's Score is " << scoreft << "\n";
         firstturn = false;
     }
-    else cout << "Dealer's Score is " << score << "\n\n";
+    else cout << "Dealer Karn's Score is " << score << "\n\n";
 }
 
 void Dealer::ShowCard(string CardId[]){
-    cout << "\nDealer's Card is => ";
+    cout << "\nDealer Karn's Card is => ";
     for (unsigned int i = 0; i < onhand.size(); i++){
         if(firstturn){
             if (onhand.size()-1 == i) cout << CardId[onhand[i]] << ' ';
@@ -87,7 +87,7 @@ void Dealer::SumScore(int Cardpoint[]){
         if (21-sum >= 10) sum += 10;
     }
     score = sum;
-    scoreft = score - Cardpoint[onhand[0]];
+    scoreft = Cardpoint[onhand[1]];
 }
 
 bool Dealer::Probability(){

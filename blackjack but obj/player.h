@@ -113,7 +113,7 @@ void Player::PlayerBet(){
 
     string text;
     getline(cin,text);
-    bet = atof(text.c_str());
+    bet = stoi(text);
     if(bet > 0 && bet <= money && bet - (int) bet == 0 && bet <= 100){
         money = money-bet;
         SetConsoleTextAttribute(h,10);

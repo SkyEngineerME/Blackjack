@@ -13,7 +13,7 @@ class Bot{
         bool survival = true;
         int money;
         int bet;
-    int cond;
+        int cond;
         
         int GiveCard(int&);
         bool Probability();
@@ -136,27 +136,24 @@ void Bot::GamePlay(string CardId[], int Cardpoint[], int &cardn){
 void Bot::BotBet(){
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(h,13);
-    cout << "------------------------------------\n";
-        cout << "[ ";
-        SetConsoleTextAttribute(h,3);
-        cout << money ;
-        SetConsoleTextAttribute(h,13);
-        cout << " ] ";
+    cout << "[ ";
+    SetConsoleTextAttribute(h,3);
+    cout << money ;
+    SetConsoleTextAttribute(h,13);
+    cout << " ] ";
+    bet = (rand()%99 + 1);
+    while(bet > money){
         bet = (rand()%99 + 1);
-        while(bet > money){
-        bet = (rand()%99 + 1);
-        }
-        money -= bet;
-        SetConsoleTextAttribute(h,13);
-        cout << "Bot No." << number << " bets ";
-        SetConsoleTextAttribute(h,3);
-        cout << bet<< "$ ";
-        SetConsoleTextAttribute(h,13);
-        cout << "(left ";
-        SetConsoleTextAttribute(h,4);
-        cout << money <<"$";
-        SetConsoleTextAttribute(h,13);
-        cout << ")\n";
-    cout << "------------------------------------\n";
-    SetConsoleTextAttribute(h,7);
+    }
+    money -= bet;
+    SetConsoleTextAttribute(h,13);
+    cout << "Bot No." << number << " bets ";
+    SetConsoleTextAttribute(h,3);
+    cout << bet<< "$ ";
+    SetConsoleTextAttribute(h,13);
+    cout << "(left ";
+    SetConsoleTextAttribute(h,4);
+    cout << money <<"$";
+    SetConsoleTextAttribute(h,13);
+    cout << ")\n";
 }
