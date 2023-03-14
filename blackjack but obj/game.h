@@ -282,24 +282,31 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
         {
             if(people->score <= 21){
                 cout << "* " << people->ShowName() << " WIN\n";
+                people->cond = 0;
             }else{
                 cout << "* " << people->ShowName() << " LOST\n";
+                people->cond = 2;
             }
         }else{
             cout << "* " << people->ShowName() << " LOST\n";
+            people->cond = 2;
         }
-        
+        Checkmoney(people->money,people->bet,people->cond);
         
         for (int count = 0; count<bot; count++){
             if(ai[count].survival){
                 if(ai[count].score <= 21){
                     cout << "* " << ai[count].ShowName() << " WIN\n";
+                    ai[count].cond = 0;
                 }else{
                     cout << "* " << ai[count].ShowName() << " LOST\n";
+                    ai[count].cond = 2;
                 }
             }else{
                 cout << "* " << ai[count].ShowName() << " LOST\n";
+                ai[count].cond = 2;
             }
+            Checkmoney(ai[count].money,ai[count].bet,ai[count].cond);
         }
     }
     

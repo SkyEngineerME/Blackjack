@@ -39,15 +39,20 @@ int main(){
             }
         }
         cout << "::: How many round you want to play between [1-50] :::\n";
-        cout <<"Round: ";
-        cin >> round; // เจอ bug นะ ใส่อะไรที่ไม่ใช่เลขแล้วมันค้าง
-        while(round < 1 || round > 50){
-            cout << "!!! Please choose between [1-50] !!!\n";
-            cout <<"Round: ";
-            cin >> round;
+        while (!flagfour)
+        {
+            cout << "Round: ";
+            input = '\0';
+            getline(cin,input);
+            if(input.size() > 2 || isdigit(input[0]) == false){
+                cout << "Invalid Input !! Please type number [1-" << (50) << "]\n"; 
+            }else{
+                round = stoi(input);
+                if(round < 1 || round > (50)) cout << "Invalid Input !! Please type number [1-" << (50) << "]\n";
+                else break;
+            }
         }
-
-        cin.ignore();
+        
         obj->Start(numbot,round);
         delete obj;
         selectplay = menu();
