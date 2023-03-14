@@ -6,7 +6,7 @@ using namespace std;
 
 class Bot{
     private:
-        int number;
+        string number;
         vector<int> onhand;
     public:
         int score; // ตอนแรกเอาไว้ใน private แต่คิดว่าคงไม่จำเป็น เพราะเกมเราคงไม่มีใครมาแฮก555 แล้ว "game.h" จะมา access ค่าง่ายขึ้นด้วย
@@ -18,9 +18,8 @@ class Bot{
         int GiveCard(int&);
         bool Probability();
         bool CheckScoreOver21();
-        void AssignNumberbot(int);
+        void AssignNumberbot(string);
         void ShowScore();
-        void ShowScore(int []);
         void ShowCard(string []);
         void GamePlay(string [], int [], int&);
         void ReceiveCard(int);
@@ -48,10 +47,10 @@ void Bot::SetDefault(){
 }
 
 string Bot::ShowName(){
-    return "Bot" + to_string(number);
+    return "Bot" + number;
 }
 
-void Bot::AssignNumberbot(int num){
+void Bot::AssignNumberbot(string num){
     number = num;
 }
 
@@ -149,7 +148,7 @@ void Bot::BotBet(){
         }
         money -= bet;
         SetConsoleTextAttribute(h,13);
-        cout << "Bot No." << " bets ";
+        cout << "Bot No." << number << " bets ";
         SetConsoleTextAttribute(h,3);
         cout << bet<< "$ ";
         SetConsoleTextAttribute(h,13);

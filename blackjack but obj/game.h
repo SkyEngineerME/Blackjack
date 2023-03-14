@@ -48,7 +48,7 @@ void Game::Start(int numbot,int round){
     Dealer *dealer = new Dealer;
 
     for (int i=0; i<numbot; i++){
-        ai[i].AssignNumberbot(i+1);
+        ai[i].AssignNumberbot(to_string(i+1));
     }
 
     while(tryagain){
