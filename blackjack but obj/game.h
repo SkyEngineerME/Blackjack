@@ -11,7 +11,7 @@ using namespace std;
 
 class Game{
     public:
-        std::string CardId[52] = {"A","2","3","4","5","6","7","8","9","10","J","Q","K",
+        string CardId[52] = {"A","2","3","4","5","6","7","8","9","10","J","Q","K",
                                 "A","2","3","4","5","6","7","8","9","10","J","Q","K",
                                 "A","2","3","4","5","6","7","8","9","10","J","Q","K",
                                 "A","2","3","4","5","6","7","8","9","10","J","Q","K"};
@@ -34,7 +34,7 @@ class Game{
         void BotShowScore(Bot&);
         void Winner(Player*, Bot*, Dealer*);
         void DealerShowCard(Dealer*);
-        void DealerShowScore(Dealer*);
+        void DealerShowScore(Dealer*&);
         void ResultGame(Player*, Bot*);
         void WriteScoreboard(Player*);
         void Checkmoney(int &,int &,int);
@@ -42,10 +42,11 @@ class Game{
 
 void Game::Start(int numbot,int round){
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-    int counter = 0;
+    int counter = 1;
     Player *people = new Player;
     Bot *ai = new Bot[numbot];
     Dealer *dealer = new Dealer;
+    bot = numbot;
 
     for (int i=0; i<numbot; i++){
         ai[i].AssignNumberbot(to_string(i+1));
@@ -54,7 +55,6 @@ void Game::Start(int numbot,int round){
     while(tryagain){
         system("cls");
         srand(time(0));
-        bot = numbot;
 
         people->PlayerBet();
         SetConsoleTextAttribute(h,13);
@@ -81,7 +81,7 @@ void Game::Start(int numbot,int round){
 
         ShuffleCard();
         cout << "\n----------------------";
-        cout << "\n|       Turn "<< counter+1 << "       |";
+        cout << "\n|       Turn "<< counter << "       |";
         cout << "\n----------------------\n";
        
         //--------------------------------- แจกการ์ด
@@ -140,15 +140,14 @@ void Game::Start(int numbot,int round){
         //---------------------------------
         
         counter++;
-        if(counter >= round){
+        if(counter > round){
             ResultGame(people,ai);
             WriteScoreboard(people);
             cout << "\nGo to HOMEPAGE [Y] .. " << '\r';
             int key = _getch();
             if(key == 121 || key == 89){
                 tryagain = false;
-            }
-            else{
+            }else{
                 while(true){
                     cout << "Invalid Command !! Please Pressed [Y] to continue .. " << '\r';
                     int key = _getch();
@@ -186,7 +185,8 @@ void Game::Start(int numbot,int round){
     delete people;
     delete dealer;
 }
-    void Game::Checkmoney(int &moneyPlayer,int &Betplayer,int condition){
+
+void Game::Checkmoney(int &moneyPlayer,int &Betplayer,int condition){
     if(condition == 0){
         cout << "Got" << endl;
         moneyPlayer += Betplayer*2;
@@ -197,8 +197,8 @@ void Game::Start(int numbot,int round){
     else{
         cout << "Lose" << endl;
     }
+}
 
-    }
 void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
     cout << "\n------ SCREEN -------\n";
     
@@ -336,28 +336,29 @@ void Game::DealerShowCard(Dealer *dealer){
     dealer->ShowCard(CardId);
 }
 
-void Game::DealerShowScore(Dealer *dealer){
+void Game::DealerShowScore(Dealer *&dealer){
     dealer->ShowScore();
+    cout << "dealer->score : " << dealer->score << " dealer->score : " << dealer->scoreft << '\n'; //debug1 
 }
 
 void Game::ResultGame(Player* p, Bot* b){ // ยังไม่เสร็จนะ TT
     cout << "\n&&&&&&&&& RESULT THIS GAME &&&&&&&&&\n\n";
     string name;
-    vector<int> score;
-    score.push_back(p->money);
+    vector<int> sc;
+    sc.push_back(p->money);
     for(int k=0; k<bot; k++){
-        score.push_back(b[k].money);
+        sc.push_back(b[k].money);
     }
 
-    int max=score[0],loc=0;
-    for(unsigned int i=0; i<score.size(); i++){
-        if(max<score[i]){
-            max = score[i];
+    int max=sc[0],loc=0;
+    for(unsigned int i=0; i<sc.size(); i++){
+        if(max<sc[i]){
+            max = sc[i];
             loc = i;
         }
     }
-    for(unsigned int i=0; i<score.size(); i++){
-        if(score[i]==max){
+    for(unsigned int i=0; i<sc.size(); i++){
+        if(sc[i]==max){
             if(i == 0) name = p->ShowName();
             else name = b[i].ShowName();
             cout << "            " << name << " WIN!!!" << endl;
