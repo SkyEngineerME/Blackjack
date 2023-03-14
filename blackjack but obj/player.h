@@ -33,7 +33,7 @@ class Player{
 };
 
 Player::Player(){
-    money = 2000;
+    money = 1000;
     cout << "::: Type your name ::: >> ";
     getline(cin,name);
 }
@@ -101,6 +101,7 @@ void Player::PlayerBet(){
     cout << "----888-------------------------888----\n";
     cout << "$$$ Put Your Money To Bet Your Fate $$$\n";
     cout << "----888-------------------------888----\n\n";
+    cout << "you can put bet between [1-100]"<<endl;
 
     while(true){
     SetConsoleTextAttribute(h,14);
@@ -113,7 +114,7 @@ void Player::PlayerBet(){
     string text;
     getline(cin,text);
     bet = atof(text.c_str());
-    if(bet > 0 && bet <= money && bet - (int) bet == 0 && bet <= 10){
+    if(bet > 0 && bet <= money && bet - (int) bet == 0 && bet <= 100){
         money = money-bet;
         SetConsoleTextAttribute(h,10);
         cout << "\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n";
@@ -130,10 +131,10 @@ void Player::PlayerBet(){
         SetConsoleTextAttribute(h,7);
         break;
     }
-    else if(bet > 10){
+    else if(bet > 100){
         SetConsoleTextAttribute(h,4);
         cout << "\n------------------------------------\n";
-        cout << "$$$ Please Bet between [1-10]!!! $$$\n";
+        cout << "$$$ Please Bet between [1-100]!!! $$$\n";
         cout << "--------------------------------------\n\n";
     }
     else if(bet > money){
