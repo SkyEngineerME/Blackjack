@@ -207,12 +207,16 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
         // ที่เหลือ ถ้าคะแนนมากกว่า dealer ก็ชนะเช่นกัน
         if(people->score == 21){
             cout << "* " << people->ShowName() << " WIN\n";
+            people->cond = 0;
         }else if(people->score > dealer->score){
             cout << "* " << people->ShowName() << " WIN\n";
+            people->cond = 0;
         }else if(people->score == dealer->score){
             cout << "* " << people->ShowName() << " DRAW\n";
+            people->cond = 1;
         }else{
             cout << "* " << people->ShowName() << " LOST\n";
+            people->cond = 2;
         }
         Checkmoney(people->bet,people->bet,people->cond);
 
@@ -221,12 +225,16 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
         for (int count = 0; count<bot; count++){
             if(ai[count].score == 21){
                 cout << "* " << ai[count].ShowName() << " WIN\n";
+                ai[count].cond = 0;
             }else if(ai[count].score > dealer->score){
                 cout << "* " << ai[count].ShowName() << " WIN\n";
+                ai[count].cond = 0;
             }else if(ai[count].score == dealer->score){
                 cout << "* " << ai[count].ShowName() << " DRAW\n";
+                ai[count].cond = 1;
             }else{
                 cout << "* " << ai[count].ShowName() << " LOST\n";
+                ai[count].cond = 2;
             }
         }
     }
