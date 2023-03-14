@@ -301,8 +301,8 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
                 people->cond = 2;
             }
         }else{
-            cout << "* " << people->ShowName() << " LOST\n";
-            people->cond = 2;
+            cout << "* " << people->ShowName() << " DRAW\n";
+            people->cond = 1;
         }
         Checkmoney(people->money,people->bet,people->cond);
         
@@ -316,8 +316,8 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
                     ai[count].cond = 2;
                 }
             }else{
-                cout << "* " << ai[count].ShowName() << " LOST\n";
-                ai[count].cond = 2;
+                cout << "* " << ai[count].ShowName() << " DRAW\n";
+                ai[count].cond = 1;
             }
             Checkmoney(ai[count].money,ai[count].bet,ai[count].cond);
         }
