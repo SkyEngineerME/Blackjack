@@ -5,3 +5,9 @@ B,300
 SiaO,100000000
 Prem,1990
 Natan,1950
+
+kk,990
+boss test ajkarn,990
+boss,946
+boss,800
+2,800
