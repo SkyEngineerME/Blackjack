@@ -413,7 +413,7 @@ void Game::ResultGame(Player* p, Bot* b){ // ยังไม่เสร็จ�
                 name = p->ShowName();
             }
             else{
-                name = b[j].ShowName();
+                name = b[(j=!0 ?j-1 :j)].ShowName();
             }
             cout << "            " << name << " WIN!!!" << '\n';
             cout << "            " << "MONEY : " << max << '\n';
