@@ -1,6 +1,7 @@
 #include "game.h"
 #include <cstdlib>
 #include <iomanip>
+#include <windows.h>
 
 bool menu();
 void ShowScoreBoard();
@@ -62,13 +63,49 @@ int main(){
 bool menu(){
     while (true){
         system("cls");
-        cout << "-------------  BLACKJACK  ---------------\n";
+        HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(h,14);
+        cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n";
+        cout << "  *********   *       *   *****        *        *        *    *********\n";
+        cout << "*             *       *     *         * *       * *      *   *         \n";
+        cout << "*             *********     *        *   *      *  *     *   *         \n";
+        cout << "*             *       *     *       *******     *    *   *   *    *****\n";
+        cout << "*             *       *     *      *       *    *      * *   *        *\n";
+        cout << "  *********   *       *   *****   *         *   *        *    *********\n\n";
+        cout << "                *           *        *        *****\n";
+        cout << "                * *       * *       * *         *\n";
+        cout << "                *   *   *   *      *   *        *\n";
+        cout << "                *     *     *     *******       *\n";
+        cout << "                *           *    *       *      *\n";
+        cout << "                *           *   *         *   *****\n\n";
+        cout << "                 *******       *******       *******\n";
+        cout << "                *       *     *       *     *       *\n";
+        cout << "                *       *     *       *     *       *\n";
+        cout << "                *       *     *       *     *       *\n";
+        cout << "                 *******       *******       *******\n";
+        cout << "                *       *     *       *     *       *\n";
+        cout << "                *       *     *       *     *       *\n";
+        cout << "                *       *     *       *     *       *\n";
+        cout << "                 *******       *******       *******\n\n";
+        cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n";
+        for(int i = 0 ; i != 3 ; i++){
+        cout << "(!) WELCOME TO CHIANG MAI 888 No.1 CASINO IN THAILAND (!)\r";
+        Sleep(1000);
+        cout << "                                                         \r";
+        Sleep(1000);
+        }
+        SetConsoleTextAttribute(h,4);
+        cout << "(!)(!)(!) Fast Transfer & EZ Come EZ Go Money Source (!)(!)(!)\n\n";
+        SetConsoleTextAttribute(h,14);
+        cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n";
+        cout << "-----$$$-----  BLACKJACK  ------$$$------\n";
         cout << "|                                       |\n";
         cout << "|             [N] NewGame               |\n";
         cout << "|             [S] Scoreboard            |\n";
         cout << "|             [E] Exit                  |\n";
         cout << "|                                       |\n";
-        cout << "-----------------------------------------\n";
+        cout << "-----$$$----------$$$-----------$$$------\n";
+        SetConsoleTextAttribute(h,7);
         while (true){
             int key = _getch();
             if (key == 110 || key == 78){
