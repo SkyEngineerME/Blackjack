@@ -350,7 +350,7 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
             Checkmoney(ai[count].money,ai[count].bet,ai[count].cond);
         }
     }
-    cout << "* [Dealer Karn score]: "<<  dealer->score << endl;
+    cout << "* [Dealer Karn score]: "<<  dealer->score << '\n';
     
 }
 
@@ -400,7 +400,6 @@ void Game::ResultGame(Player* p, Bot* b){ // ยังไม่เสร็จ�
     for(int k=0; k<bot; k++){
         sc.push_back(b[k].money);
     }
-
     int max=sc[0],loc=0;
     for(unsigned int i=0; i<sc.size(); i++){
         if(max<sc[i]){
@@ -408,12 +407,16 @@ void Game::ResultGame(Player* p, Bot* b){ // ยังไม่เสร็จ�
             loc = i;
         }
     }
-    for(unsigned int i=0; i<sc.size(); i++){
-        if(sc[i]==max){
-            if(i == 0) name = p->ShowName();
-            else name = b[i].ShowName();
-            cout << "            " << name << " WIN!!!" << endl;
-            cout << "            " << "MONEY : " << max << endl;
+    for(unsigned int j=0; j<sc.size(); j++){
+        if(sc[j]==max){
+            if(j == 0) {
+                name = p->ShowName();
+            }
+            else{
+                name = b[j].ShowName();
+            }
+            cout << "            " << name << " WIN!!!" << '\n';
+            cout << "            " << "MONEY : " << max << '\n';
         }
     }
 
