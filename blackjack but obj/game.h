@@ -193,8 +193,12 @@ void Game::Start(int numbot,int round){
 void Game::Checkmoney(int &moneyPlayer,int &Betplayer,int condition){
     if(condition == 0){
         moneyPlayer += Betplayer*2;
+        cout << " Bet: +" << Betplayer*2 <<endl;
     }else if(condition == 1){
         moneyPlayer += Betplayer;
+        cout << " Return: " << Betplayer <<endl;
+    }else{
+        cout << " Bet: -" << Betplayer << endl;
     }
 }
 void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
@@ -205,20 +209,26 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
         // ที่เหลือ ถ้าคะแนนมากกว่า dealer ก็ชนะเช่นกัน
         if(people->survival){
             if(people->score == 21){
-                cout << "* " << people->ShowName() << " WIN\n";
+                cout << "* " << people->ShowName() << " WIN";
+                cout << " Score: "<<people->score;
                 people->cond = 0;
+//cout << people->score << endl;
             }else if(people->score > dealer->score){
-                cout << "* " << people->ShowName() << " WIN\n";
+                cout << "* " << people->ShowName() << " WIN";
+                cout << " Score: "<<people->score;
                 people->cond = 0;
             }else if(people->score == dealer->score){
-                cout << "* " << people->ShowName() << " DRAW\n";
+                cout << "* " << people->ShowName() << " DRAW";
+                cout << " Score: "<<people->score ;
                 people->cond = 1;
             }else{
-                cout << "* " << people->ShowName() << " LOST\n";
+                cout << "* " << people->ShowName() << " LOST";
+                cout << " Score: "<<people->score ;
                 people->cond = 2;
             }
         }else{
-            cout << "* " << people->ShowName() << " LOST\n";
+            cout << "* " << people->ShowName() << " LOST";
+            cout << " Score: "<<people->score ;
             people->cond = 2;
         }
         Checkmoney(people->bet,people->bet,people->cond);
@@ -228,20 +238,24 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
         for (int count = 0; count<bot; count++){
             if(ai[count].survival){
                 if(ai[count].score == 21){
-                    cout << "* " << ai[count].ShowName() << " WIN\n";
+                    cout << "* " << ai[count].ShowName() << " WIN";
+                    cout << " Score: "<<ai[count].score;
                     ai[count].cond = 0;
                 }else if(ai[count].score > dealer->score){
-                    cout << "* " << ai[count].ShowName() << " WIN\n";
-                    ai[count].cond = 0;
+                    cout << "* " << ai[count].ShowName() << " WIN";
+                    cout << " Score: "<<ai[count].score;
                 }else if(ai[count].score == dealer->score){
-                    cout << "* " << ai[count].ShowName() << " DRAW\n";
+                    cout << "* " << ai[count].ShowName() << " DRAW";
+                    cout << " Score: "<<ai[count].score;
                     ai[count].cond = 1;
                 }else{
-                    cout << "* " << ai[count].ShowName() << " LOST\n";
+                    cout << "* " << ai[count].ShowName() << " LOST";
+                    cout << " Score: "<<ai[count].score;
                     ai[count].cond = 2;
                 }
             }else{
-                cout << "* " << ai[count].ShowName() << " LOST\n";
+                cout << "* " << ai[count].ShowName() << " LOST";
+                cout << " Score: "<<ai[count].score;
                 ai[count].cond = 2;
             }
             Checkmoney(ai[count].money,ai[count].bet,ai[count].cond);
@@ -254,17 +268,21 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
         if (people->survival)
         {
             if(people->score > dealer->score){
-                cout << "* " << people->ShowName() << " WIN\n";
+                cout << "* " << people->ShowName() << " WIN";
+                cout << " Score: "<<people->score ;
                 people->cond = 0;
             }else if(people->score == dealer->score){
-                cout << "* " << people->ShowName() << " DRAW\n";
+                cout << "* " << people->ShowName() << " DRAW";
+                cout << " Score: "<<people->score ;
                 people->cond = 1;
             }else{
-                cout << "* " << people->ShowName() << " LOST\n";
+                cout << "* " << people->ShowName() << " LOST";
+                cout << " Score: "<<people->score ;
                 people->cond = 2;
             }
         }else{
-            cout << "* " << people->ShowName() << " LOST\n";
+            cout << "* " << people->ShowName() << " LOST";
+            cout << " Score: "<<people->score ;
             people->cond = 2;
         }
         Checkmoney(people->money,people->bet,people->cond);
@@ -272,17 +290,21 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
         for (int count = 0; count<bot; count++){
             if(ai[count].survival){
                 if(ai[count].score > dealer->score){
-                    cout << "* " << ai[count].ShowName() << " WIN\n";
+                    cout << "* " << ai[count].ShowName() << " WIN";
+                    cout << " Score: "<<ai[count].score;
                     ai[count].cond = 0;
                 }else if(ai[count].score == dealer->score){
-                    cout << "* " << ai[count].ShowName() << " DRAW\n";
+                    cout << "* " << ai[count].ShowName() << " DRAW";
+                    cout << " Score: "<<ai[count].score;
                     ai[count].cond = 1;
                 }else{
-                    cout << "* " << ai[count].ShowName() << " LOST\n";
+                    cout << "* " << ai[count].ShowName() << " LOST";
+                    cout << " Score: "<<ai[count].score;
                     ai[count].cond = 2;
                 }
             }else{
-                cout << "* " << ai[count].ShowName() << " LOST\n";
+                cout << "* " << ai[count].ShowName() << " LOST";
+                cout << " Score: "<<ai[count].score;
                 ai[count].cond = 2;
             }
             Checkmoney(ai[count].money,ai[count].bet,ai[count].cond);
@@ -294,14 +316,17 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
         if (people->survival)
         {
             if(people->score <= 21){
-                cout << "* " << people->ShowName() << " WIN\n";
+                cout << "* " << people->ShowName() << " WIN";
+                cout << " Score: "<<people->score;
                 people->cond = 0;
             }else{
-                cout << "* " << people->ShowName() << " LOST\n";
+                cout << "* " << people->ShowName() << " LOST";
+                cout << " Score: "<<people->score;
                 people->cond = 2;
             }
         }else{
-            cout << "* " << people->ShowName() << " DRAW\n";
+            cout << "* " << people->ShowName() << " DRAW";
+            cout << " Score: "<<people->score;
             people->cond = 1;
         }
         Checkmoney(people->money,people->bet,people->cond);
@@ -309,14 +334,17 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
         for (int count = 0; count<bot; count++){
             if(ai[count].survival){
                 if(ai[count].score <= 21){
-                    cout << "* " << ai[count].ShowName() << " WIN\n";
+                    cout << "* " << ai[count].ShowName() << " WIN";
+                    cout << " Score: "<<ai[count].score;
                     ai[count].cond = 0;
                 }else{
-                    cout << "* " << ai[count].ShowName() << " LOST\n";
+                    cout << "* " << ai[count].ShowName() << " LOST";
+                    cout << " Score: "<<ai[count].score;
                     ai[count].cond = 2;
                 }
             }else{
-                cout << "* " << ai[count].ShowName() << " DRAW\n";
+                cout << "* " << ai[count].ShowName() << " DRAW";
+                cout << " Score: "<<ai[count].score;
                 ai[count].cond = 1;
             }
             Checkmoney(ai[count].money,ai[count].bet,ai[count].cond);
