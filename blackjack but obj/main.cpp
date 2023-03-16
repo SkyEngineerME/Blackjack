@@ -85,7 +85,7 @@ bool menu(){
     }
 }
 
-void ShowScoreBoard(){ // concept support by ChatGPT
+void ShowScoreBoard(){
     ifstream input("scoreboard.txt");
     string textline;
     vector<int> money;
@@ -99,7 +99,7 @@ void ShowScoreBoard(){ // concept support by ChatGPT
         money.push_back(cash);
     }
     input.close();
-    vector<pair<int, string>> sorteddata(name.size());    
+    vector<pair<int, string>> sorteddata(name.size()); // concept support by ChatGPT  
 
     for(unsigned int i=0; i<money.size(); i++){
         sorteddata[i] = make_pair(money[i], name[i]);
