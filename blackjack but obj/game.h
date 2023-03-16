@@ -350,7 +350,7 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
             Checkmoney(ai[count].money,ai[count].bet,ai[count].cond);
         }
     }
-    
+    cout << "Dealer score: "<<  dealer->score << endl;
     
 }
 
