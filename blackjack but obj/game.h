@@ -80,9 +80,9 @@ void Game::Start(int numbot,int round){
             }
 
         ShuffleCard();
-        cout << "\n----------------------";
-        cout << "\n|       Turn "<< counter << "       |";
-        cout << "\n----------------------\n";
+        cout << "\n     ----------------------";
+        cout << "\n     |       Turn "<< counter << "       |";
+        cout << "\n     ----------------------\n";
        
         //--------------------------------- แจกการ์ด
         for(int j=0; j<2; j++) people->ReceiveCard(GiveCard());
@@ -106,7 +106,7 @@ void Game::Start(int numbot,int round){
         DealerShowScore(dealer);
 
     
-        cout << "\n********************************\n";
+        cout << "\n*********************************\n";
         
         //--------------------------------- เช็คหาคนที่ blackjack ในตาแรกเท่านั้น
         if(people->score == 21){
@@ -212,7 +212,7 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
                 cout << "* " << people->ShowName() << " WIN";
                 cout << " Score: "<<people->score;
                 people->cond = 0;
-//cout << people->score << endl;
+                //cout << people->score << endl;
             }else if(people->score > dealer->score){
                 cout << "* " << people->ShowName() << " WIN";
                 cout << " Score: "<<people->score;
@@ -360,7 +360,7 @@ void Game::ShuffleCard(){
         swap(CardId[i], CardId[r]);
         swap(Cardpoint[i], Cardpoint[r]);
     }
-    cout << "########## ShuffleCard.... ###########\n";
+    cout << "######## ShuffleCard.... ########\n";
 }
 
 int Game::GiveCard(){
