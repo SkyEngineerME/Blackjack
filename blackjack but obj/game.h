@@ -244,6 +244,7 @@ void Game::Winner(Player *people, Bot *ai, Dealer *dealer){
                 }else if(ai[count].score > dealer->score){
                     cout << "* " << ai[count].ShowName() << " WIN";
                     cout << " Score: "<<ai[count].score;
+                    ai[count].cond = 0;
                 }else if(ai[count].score == dealer->score){
                     cout << "* " << ai[count].ShowName() << " DRAW";
                     cout << " Score: "<<ai[count].score;
