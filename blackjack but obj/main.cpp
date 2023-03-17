@@ -31,7 +31,7 @@ int main(){
             input = '\0';
             getline(cin,input);
             if(input.size() > 1 || isdigit(input[0]) == false){
-                cout << input.size() << ' ' << isdigit(input[0]);
+                // cout << input.size() << ' ' << isdigit(input[0]);
                 cout << "Invalid Input !! Please type number [1-" << (4 - 1) << "]\n"; 
             }else{
                 numbot = stoi(input);
